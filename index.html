@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TickTock Time 🕐</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- ══════════════════════════════════════════
+         LOADING SCREEN
+    ══════════════════════════════════════════ -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-mascot-wrap">
+                <div class="loading-clock-body">
+                    <div class="loading-clock-face">
+                        <div class="loading-hand hour-hand" id="loadHour"></div>
+                        <div class="loading-hand minute-hand" id="loadMinute"></div>
+                        <div class="loading-center-dot"></div>
+                        <span class="loading-num" style="top:6%;left:50%;transform:translateX(-50%)">12</span>
+                        <span class="loading-num" style="top:50%;right:4%;transform:translateY(-50%)">3</span>
+                        <span class="loading-num" style="bottom:6%;left:50%;transform:translateX(-50%)">6</span>
+                        <span class="loading-num" style="top:50%;left:4%;transform:translateY(-50%)">9</span>
+                    </div>
+                    <div class="loading-legs">
+                        <div class="loading-leg"></div>
+                        <div class="loading-leg"></div>
+                    </div>
+                    <div class="loading-arms">
+                        <div class="loading-arm loading-arm-left"></div>
+                        <div class="loading-arm loading-arm-right"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="loading-title">TickTock <span>Time</span></h2>
+            <div class="loading-bar-wrap">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <p class="loading-sub">Loading... ⏰</p>
+        </div>
+        <!-- Floating decos on loading screen -->
+        <div class="load-deco" style="top:10%;left:8%;font-size:32px;animation-delay:0s">⭐</div>
+        <div class="load-deco" style="top:15%;right:10%;font-size:24px;animation-delay:.5s">🌟</div>
+        <div class="load-deco" style="bottom:20%;left:12%;font-size:28px;animation-delay:.9s">✨</div>
+        <div class="load-deco" style="bottom:15%;right:8%;font-size:26px;animation-delay:1.3s">⭐</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         LANDING PAGE
+    ══════════════════════════════════════════ -->
+    <div id="landing-page" class="page hidden">
+
+        <!-- ═══ FLOATING WORLD (outside card, full page) ═══ -->
+        <!-- Stars layer -->
+        <div class="float-world">
+            <div class="fw-star" style="top:5%;left:2%;--sz:38px;--delay:0s;--col:#FFE66D">⭐</div>
+            <div class="fw-star" style="top:8%;left:12%;--sz:22px;--delay:.4s;--col:#FFB3DE">✦</div>
+            <div class="fw-star" style="top:4%;right:6%;--sz:32px;--delay:.7s;--col:#A8E6CF">🌟</div>
+            <div class="fw-star" style="top:12%;right:2%;--sz:18px;--delay:1.1s;--col:#FFE66D">✦</div>
+            <div class="fw-star" style="bottom:8%;left:4%;--sz:28px;--delay:.3s;--col:#74B9FF">⭐</div>
+            <div class="fw-star" style="bottom:5%;left:20%;--sz:20px;--delay:.9s;--col:#FF9F43">✦</div>
+            <div class="fw-star" style="bottom:10%;right:5%;--sz:34px;--delay:.6s;--col:#FD79A8">🌟</div>
+            <div class="fw-star" style="bottom:4%;right:18%;--sz:16px;--delay:1.4s;--col:#A29BFE">✦</div>
+            <div class="fw-star" style="top:50%;left:0.5%;--sz:24px;--delay:1.7s;--col:#55EFC4">⭐</div>
+            <div class="fw-star" style="top:30%;right:1%;--sz:20px;--delay:2.1s;--col:#FFE66D">✦</div>
+            <!-- Emojis -->
+            <div class="fw-emoji" style="top:14%;left:5%;--delay:.2s;font-size:clamp(20px,2.2vw,40px)">🎈</div>
+            <div class="fw-emoji" style="top:6%;left:35%;--delay:.8s;font-size:clamp(16px,1.8vw,32px)">🎉</div>
+            <div class="fw-emoji" style="top:10%;right:12%;--delay:1.3s;font-size:clamp(18px,2vw,36px)">🎊</div>
+            <div class="fw-emoji" style="bottom:15%;left:7%;--delay:.5s;font-size:clamp(18px,2vw,34px)">🌈</div>
+            <div class="fw-emoji" style="bottom:7%;right:10%;--delay:1s;font-size:clamp(18px,2vw,34px)">🎀</div>
+            <div class="fw-emoji" style="top:45%;right:2%;--delay:1.6s;font-size:clamp(16px,1.8vw,30px)">🌸</div>
+            <div class="fw-emoji" style="bottom:22%;left:1%;--delay:2s;font-size:clamp(14px,1.5vw,26px)">🍭</div>
+            <!-- Floating SVG shapes -->
+            <div class="fw-shape shape-circle" style="top:18%;left:8%;--delay:.6s"></div>
+            <div class="fw-shape shape-donut" style="bottom:18%;right:8%;--delay:1.2s"></div>
+            <div class="fw-shape shape-triangle" style="top:40%;left:3%;--delay:.9s"></div>
+            <div class="fw-shape shape-circle2" style="top:8%;right:25%;--delay:1.5s"></div>
+        </div>
+
+        <div class="landing-dashboard">
+
+            <!-- ─── INNER floating decos (inside card) ─── -->
+            <div class="inner-deco id1">✦</div>
+            <div class="inner-deco id2">✦</div>
+            <div class="inner-deco id3">✦</div>
+            <div class="inner-deco id4">⭐</div>
+            <div class="inner-deco id5">🌟</div>
+            <!-- Colorful blobs -->
+            <div class="card-blob blob1"></div>
+            <div class="card-blob blob2"></div>
+            <div class="card-blob blob3"></div>
+
+            <!-- ══ LEFT PANEL ══ -->
+            <div class="dashboard-left">
+                <!-- Cloud puffs -->
+                <div class="puff puff-tl"></div>
+                <div class="puff puff-tr"></div>
+                <div class="puff puff-bl"></div>
+                <!-- Ground strip -->
+                <div class="ground-strip">
+                    <div class="grass-tuft gt1">🌿</div>
+                    <div class="grass-tuft gt2">🌱</div>
+                    <div class="grass-tuft gt3">🌿</div>
+                </div>
+
+                <!-- Mascot -->
+                <div class="mascot" id="mascot">
+                    <div class="mascot-clock">
+                        <div class="mascot-face">
+                            <div class="mascot-eye left"></div>
+                            <div class="mascot-eye right"></div>
+                            <div class="mascot-cheek left-cheek"></div>
+                            <div class="mascot-cheek right-cheek"></div>
+                            <div class="mascot-smile"></div>
+                            <div class="mascot-hand mh-hour" id="mascotHour"></div>
+                            <div class="mascot-hand mh-min" id="mascotMin"></div>
+                            <div class="mascot-center"></div>
+                            <span class="mascot-num" style="top:4%;left:50%;transform:translateX(-50%)">12</span>
+                            <span class="mascot-num" style="top:50%;right:2%;transform:translateY(-50%)">3</span>
+                            <span class="mascot-num" style="bottom:4%;left:50%;transform:translateX(-50%)">6</span>
+                            <span class="mascot-num" style="top:50%;left:2%;transform:translateY(-50%)">9</span>
+                        </div>
+                    </div>
+                    <div class="mascot-legs">
+                        <div class="mascot-leg left"></div>
+                        <div class="mascot-leg right"></div>
+                    </div>
+                    <div class="mascot-arms">
+                        <div class="mascot-arm left"></div>
+                        <div class="mascot-arm right"></div>
+                    </div>
+                    <div class="mascot-speech" id="mascotSpeech">
+                        Learning while playing is fun! 🎉
+                    </div>
+                    <!-- Small star orbits around mascot -->
+                    <div class="mascot-orbit o1">⭐</div>
+                    <div class="mascot-orbit o2">✨</div>
+                    <div class="mascot-orbit o3">💫</div>
+                </div>
+
+                <!-- About Card -->
+                <button class="about-card-btn" onclick="showPage('about-page')">
+                    <span class="about-card-icon">👥</span>
+                    <div class="about-card-text">
+                        <span class="about-card-main">About This Project</span>
+                        <span class="about-card-sub">Meet the development team</span>
+                    </div>
+                    <span class="about-card-arrow">→</span>
+                </button>
+            </div>
+
+            <!-- ══ RIGHT PANEL ══ -->
+            <div class="dashboard-right">
+
+                <!-- Title block — maximized, left-aligned, full width -->
+                <div class="landing-title-area">
+                    <div class="landing-title-row">
+                        <h1 class="landing-title">
+                            <span class="title-line1">TickTock</span>
+                            <span class="title-line2">Time
+                                <!-- Inline SVG clock icon — crisp, big, matches reference -->
+                                <span class="title-clock-svg" aria-hidden="true">
+                                    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="40" cy="40" r="36" fill="white" stroke="#2D3436" stroke-width="5"/>
+                                        <circle cx="40" cy="40" r="32" fill="#fffbe8"/>
+                                        <!-- hour hand pointing to ~1 -->
+                                        <line x1="40" y1="40" x2="52" y2="22" stroke="#2D3436" stroke-width="4" stroke-linecap="round"/>
+                                        <!-- minute hand pointing to 12 -->
+                                        <line x1="40" y1="40" x2="40" y2="14" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
+                                        <circle cx="40" cy="40" r="4" fill="#FF6B6B"/>
+                                    </svg>
+                                </span>
+                            </span>
+                        </h1>
+                        <div class="landing-side-note">
+                            <span class="side-note-icon">🚀</span>
+                            <div class="side-note-copy">
+                                <span class="side-note-label">Challenge Ready</span>
+                                <span class="side-note-text">Easy clock lessons + fun rewards</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="landing-subtitle">
+                        Learn how to read the clock in English<br>with fun interactive quizzes! 🎉
+                    </p>
+                    <div class="landing-emoji-row">
+                        <div class="landing-emoji-item">🎯</div>
+                        <div class="landing-emoji-item">⏰</div>
+                        <div class="landing-emoji-item">🎉</div>
+                        <div class="landing-emoji-item">⭐</div>
+                    </div>
+                </div>
+
+                <!-- High Score pill -->
+                <div class="high-score-wrap" id="highScoreWrap" style="display:none">
+                    <span class="hs-trophy">🏆</span>
+                    <span class="hs-label">High Score:</span>
+                    <span class="hs-val" id="highScoreVal">0</span>
+                    <div class="hs-stars">
+                        <span>⭐</span><span>⭐</span><span>⭐</span>
+                    </div>
+                </div>
+
+                <!-- Badges row -->
+                <div class="badges-row" id="badgesRow"></div>
+
+                <!-- Action Buttons -->
+                <div class="dashboard-actions">
+                    <a href="https://canva.link/zdz2piqxnzt53bj" target="_blank" class="btn btn-learn">
+                        <span class="btn-icon">📚</span>
+                        <div class="btn-text">
+                            <span class="btn-main">Learning Material</span>
+                            <span class="btn-sub">Open classroom presentation</span>
+                        </div>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <button class="btn btn-quiz" onclick="showQuizMenu()">
+                        <span class="btn-icon">🎮</span>
+                        <div class="btn-text">
+                            <span class="btn-main">Start Quiz</span>
+                            <span class="btn-sub">Open quiz menu</span>
+                        </div>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+
+                <!-- Fun fact ticker at bottom of right panel -->
+                <div class="fun-ticker">
+                    <span class="ticker-icon">💡</span>
+                    <span class="ticker-text" id="tickerText">Did you know? There are 1,440 minutes in a day! ⏰</span>
+                </div>
+
+            </div>
+            <!-- end dashboard-right -->
+
+        </div>
+        <!-- end landing-dashboard -->
+    </div>
+    <!-- ══════════════════════════════════════════
+         QUIZ MENU
+    ══════════════════════════════════════════ -->
+    <div id="quiz-menu" class="page hidden">
+
+        <!-- Floating decos -->
+        <div class="bg-deco" style="top:8%;left:4%;font-size:clamp(18px,2vw,34px);animation-delay:0s">⭐</div>
+        <div class="bg-deco" style="top:6%;right:5%;font-size:clamp(14px,1.5vw,28px);animation-delay:.5s">🌟</div>
+        <div class="bg-deco" style="bottom:15%;right:4%;font-size:clamp(14px,1.4vw,26px);animation-delay:1s">✨</div>
+        <div class="bg-deco" style="bottom:20%;left:3%;font-size:clamp(14px,1.5vw,26px);animation-delay:.8s">🎈</div>
+
+        <button class="back-btn" onclick="showPage('landing-page')">← Back</button>
+
+        <div class="menu-layout">
+
+            <!-- LEFT: mascot -->
+            <div class="menu-mascot-col">
+                <div class="cloud-accent cloud-tl" style="opacity:.6"></div>
+                <div class="cloud-accent cloud-bl" style="opacity:.4"></div>
+                <div class="puff puff-tl" style="opacity:.4"></div>
+                <div class="puff puff-tr" style="opacity:.3"></div>
+                <div class="puff puff-bl" style="opacity:.45"></div>
+                <div class="menu-mascot" id="menuMascot">
+                    <div class="menu-mascot-ring"></div>
+                    <div class="mascot-orbit o1">⭐</div>
+                    <div class="mascot-orbit o2">✨</div>
+                    <div class="mascot-orbit o3">💫</div>
+                    <div class="mascot" id="mascot2">
+                        <div class="mascot-clock">
+                            <div class="mascot-face">
+                                <div class="mascot-eye left" style="top:36%"></div>
+                                <div class="mascot-eye right" style="top:36%"></div>
+                                <div class="mascot-cheek left-cheek"></div>
+                                <div class="mascot-cheek right-cheek"></div>
+                                <div class="mascot-smile"></div>
+                                <div class="mascot-hand mh-hour" id="mascotHour2"></div>
+                                <div class="mascot-hand mh-min" id="mascotMin2"></div>
+                                <div class="mascot-center"></div>
+                                <span class="mascot-num" style="top:4%;left:50%;transform:translateX(-50%)">12</span>
+                                <span class="mascot-num" style="top:50%;right:2%;transform:translateY(-50%)">3</span>
+                                <span class="mascot-num" style="bottom:4%;left:50%;transform:translateX(-50%)">6</span>
+                                <span class="mascot-num" style="top:50%;left:2%;transform:translateY(-50%)">9</span>
+                            </div>
+                        </div>
+                        <div class="mascot-legs">
+                            <div class="mascot-leg left"></div>
+                            <div class="mascot-leg right"></div>
+                        </div>
+                        <div class="mascot-arms">
+                            <div class="mascot-arm left"></div>
+                            <div class="mascot-arm right"></div>
+                        </div>
+                    </div>
+                    <div class="menu-mascot-speech">
+                        Choose your quiz mode and<br><span class="speech-highlight">let's have fun! 😄</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: mode cards -->
+            <div class="menu-content-col">
+                <div class="menu-title-area">
+                    <span class="menu-star-deco">⭐</span>
+                    <h2 class="menu-title">Quiz Menu</h2>
+                    <span class="menu-star-deco">⭐</span>
+                </div>
+                <p class="menu-sub">Pick a mode and start the challenge!</p>
+                <div class="menu-emoji-row">
+                    <div class="menu-emoji-item">🧠</div>
+                    <div class="menu-emoji-item">🎯</div>
+                    <div class="menu-emoji-item">⚡</div>
+                    <div class="menu-emoji-item">🏆</div>
+                </div>
+                <div class="menu-panel-deco">
+                    <span class="panel-chip">Study Tips</span>
+                    <span class="panel-chip">Boost score</span>
+                    <span class="panel-chip">Fun facts</span>
+                </div>
+
+                <div class="mode-cards">
+
+                    <!-- Multiple Choice -->
+                    <div class="mode-card mode-card-mc" onclick="startIndividualQuiz()">
+                        <div class="mode-card-icon-wrap mc-icon-wrap">
+                            <svg class="mode-svg-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="10" y="10" width="60" height="72" rx="8" fill="#f0f7ff" stroke="#6C5CE7" stroke-width="3"/>
+                                <rect x="20" y="24" width="40" height="6" rx="3" fill="#6C5CE7" opacity=".5"/>
+                                <rect x="20" y="36" width="30" height="6" rx="3" fill="#6C5CE7" opacity=".3"/>
+                                <circle cx="16" cy="54" r="5" fill="#6C5CE7"/>
+                                <circle cx="16" cy="54" r="2.5" fill="white"/>
+                                <rect x="24" y="51" width="32" height="6" rx="3" fill="#6C5CE7" opacity=".3"/>
+                                <circle cx="16" cy="68" r="5" fill="#6C5CE7" opacity=".4"/>
+                                <rect x="24" y="65" width="24" height="6" rx="3" fill="#6C5CE7" opacity=".2"/>
+                                <!-- pencil -->
+                                <rect x="52" y="46" width="20" height="8" rx="4" fill="#FFE66D" transform="rotate(-40 52 46)"/>
+                                <polygon points="43,76 47,68 51,72" fill="#FFE66D" transform="rotate(-40 47 72)"/>
+                            </svg>
+                        </div>
+                        <h3 class="mode-card-title">Individual Quiz</h3>
+                        <p class="mode-card-desc">Answer the questions<br>by choosing the<br>correct option.</p>
+                        <div class="mode-card-deco">
+                            <span class="deco-pill">Learning boost</span>
+                            <span class="deco-pill">Perfect for practice</span>
+                        </div>
+                        <button class="mode-start-btn mc-btn">Start Quiz →</button>
+                    </div>
+
+                    <!-- Time Challenge -->
+                    <div class="mode-card mode-card-tc" onclick="showGroupSetup()">
+                        <div class="mode-card-icon-wrap tc-icon-wrap">
+                            <svg class="mode-svg-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Stopwatch body -->
+                                <circle cx="42" cy="46" r="28" fill="#fff3e0" stroke="#FF9F43" stroke-width="3"/>
+                                <circle cx="42" cy="46" r="20" fill="white" stroke="#FF9F43" stroke-width="2"/>
+                                <!-- hands -->
+                                <line x1="42" y1="46" x2="42" y2="30" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="42" y1="46" x2="52" y2="42" stroke="#2D3436" stroke-width="2.5" stroke-linecap="round"/>
+                                <circle cx="42" cy="46" r="3.5" fill="#FF6B6B"/>
+                                <!-- top button -->
+                                <rect x="37" y="10" width="10" height="7" rx="3" fill="#FF9F43"/>
+                                <!-- speed lines -->
+                                <line x1="5" y1="38" x2="14" y2="38" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+                                <line x1="3" y1="46" x2="13" y2="46" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+                                <line x1="5" y1="54" x2="14" y2="54" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round" opacity=".3"/>
+                            </svg>
+                        </div>
+                        <h3 class="mode-card-title">Team Quiz</h3>
+                        <p class="mode-card-desc">Answer as many questions<br>as you can before<br>time runs out!</p>
+                        <div class="mode-card-deco">
+                            <span class="deco-pill">Beat the clock</span>
+                            <span class="deco-pill">Team energy</span>
+                        </div>
+                        <button class="mode-start-btn tc-btn">Start Quiz →</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         GROUP SETUP (Time Challenge)
+    ══════════════════════════════════════════ -->
+    <div id="group-setup" class="page hidden">
+        <button class="back-btn" onclick="showPage('quiz-menu')">← Back</button>
+        <div class="setup-page-wrap">
+            <div class="setup-container">
+                <div class="setup-header">
+                    <span class="setup-emoji">👥</span>
+                    <h2 class="menu-title">Set Up Groups</h2>
+                    <p class="menu-sub">Define the number and names of your groups!</p>
+                </div>
+                <div class="group-count-wrap">
+                    <label class="count-label">Number of Groups:</label>
+                    <div class="count-selector">
+                        <button onclick="changeGroupCount(-1)">−</button>
+                        <span id="groupCountDisplay">3</span>
+                        <button onclick="changeGroupCount(1)">+</button>
+                    </div>
+                </div>
+                <div id="groupInputs" class="group-inputs"></div>
+                <button class="start-group-btn" onclick="startGroupQuiz()">🚀 Start Group Quiz!</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         INDIVIDUAL QUIZ (Multiple Choice mode)
+    ══════════════════════════════════════════ -->
+    <div id="individual-quiz" class="page hidden">
+        <div class="quiz-header">
+            <button class="exit-btn" onclick="confirmExit()">✕ Exit</button>
+            <div class="quiz-progress-wrap">
+                <div class="progress-info">
+                    <span class="q-num-badge"><span id="qNum">1</span><span class="q-sep">/</span><span id="qTotal">30</span></span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+            </div>
+            <div class="score-display">
+                <span>⭐</span>
+                <span id="currentScore">0</span>
+            </div>
+        </div>
+
+        <div class="quiz-body" id="quizBody"></div>
+
+        <div class="quiz-footer">
+            <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>✓ Check Answer</button>
+        </div>
+
+        <!-- Feedback Popup -->
+        <div class="feedback-popup hidden" id="feedbackPopup">
+            <div class="feedback-inner" id="feedbackInner">
+                <div class="feedback-emoji" id="feedbackEmoji"></div>
+                <div class="feedback-msg" id="feedbackMsg"></div>
+                <div class="feedback-score" id="feedbackScore"></div>
+                <button class="feedback-next" id="feedbackNext" onclick="nextQuestion()">Next ➜</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         GROUP QUIZ (Time Challenge mode)
+    ══════════════════════════════════════════ -->
+    <div id="group-quiz" class="page hidden">
+        <div class="quiz-header group-header">
+            <button class="exit-btn" onclick="confirmExit()">✕ Exit</button>
+            <div class="group-turn-info">
+                <div class="current-team-badge" id="currentTeamBadge">Team 1</div>
+                <div class="question-counter">Question <span id="gqNum">1</span>/30</div>
+            </div>
+            <div class="timer-circle" id="timerCircle">
+                <svg viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="26" class="timer-bg"/>
+                    <circle cx="30" cy="30" r="26" class="timer-fg" id="timerArc"/>
+                </svg>
+                <span id="timerNum">30</span>
+            </div>
+        </div>
+
+        <div class="group-leaderboard-mini" id="groupLeaderMini"></div>
+        <div class="quiz-body" id="groupQuizBody"></div>
+        <div class="quiz-footer">
+            <button class="check-btn" id="gCheckBtn" onclick="checkGroupAnswer()" disabled>✓ Answer!</button>
+        </div>
+
+        <div class="feedback-popup hidden" id="groupFeedback">
+            <div class="feedback-inner" id="groupFeedbackInner">
+                <div class="feedback-emoji" id="gFeedbackEmoji"></div>
+                <div class="feedback-msg" id="gFeedbackMsg"></div>
+                <div class="feedback-score" id="gFeedbackScore"></div>
+                <button class="feedback-next" onclick="nextGroupQuestion()">Next ➜</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         RESULT PAGE (Individual / Multiple Choice)
+    ══════════════════════════════════════════ -->
+    <div id="result-page" class="page hidden">
+        <div class="result-scene">
+            <div class="result-container" id="resultContainer">
+                <div class="result-trophy" id="resultTrophy">🏆</div>
+                <h2 class="result-title">Quiz Completed!</h2>
+                <div class="result-score-wrap">
+                    <div class="result-score-label">Your Final Score</div>
+                    <div class="result-score-val" id="finalScore">0</div>
+                    <div class="result-score-max">out of 300</div>
+                </div>
+                <div class="result-stats" id="resultStats"></div>
+                <div class="result-badges" id="resultBadges"></div>
+                <div class="result-btns">
+                    <button class="btn btn-learn" onclick="startIndividualQuiz()">🔄 Play Again</button>
+                    <button class="btn btn-quiz" onclick="showPage('landing-page')">🏠 Main Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         GROUP RESULT PAGE
+    ══════════════════════════════════════════ -->
+    <div id="group-result" class="page hidden">
+        <div class="result-scene">
+            <div class="result-container">
+                <div class="group-winner-wrap">
+                    <div class="winner-crown">👑</div>
+                    <div class="winner-trophy-anim">🏆</div>
+                    <h2 class="result-title">Quiz Completed!</h2>
+                    <div class="winner-announce" id="winnerAnnounce"></div>
+                </div>
+                <div class="group-final-leaderboard" id="groupFinalLeaderboard"></div>
+                <div class="result-btns">
+                    <button class="btn btn-learn" onclick="showGroupSetup()">🔄 Play Again</button>
+                    <button class="btn btn-quiz" onclick="showPage('landing-page')">🏠 Main Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         ABOUT PAGE
+    ══════════════════════════════════════════ -->
+    <div id="about-page" class="page hidden">
+        <button class="back-btn about-back-btn" onclick="showPage('landing-page')">← Back</button>
+        <div class="about-page-wrap">
+            <div class="about-container">
+
+                <!-- Header -->
+                <div class="about-header">
+                    <div class="about-logo-wrap">
+                        <img src="university-logo.png" alt="University Logo" class="about-logo" onerror="this.style.display='none';document.getElementById('aboutLogoPlaceholder').style.display='flex'">
+                        <div class="about-logo-placeholder" id="aboutLogoPlaceholder">
+                        </div>
+                    </div>
+                    <div class="about-title-block">
+                        <h1 class="about-title">TickTock Time</h1>
+                        <p class="about-subtitle">We are students of <strong>KUNINGAN UNIVERSITY.</strong></p>
+                    </div>
+                </div>
+
+                <!-- Team Members -->
+                <div class="about-section">
+                    <h2 class="about-section-title">👩‍🎓 Team Members</h2>
+                    <div class="about-members">
+                        <div class="about-member-card">
+                            <div class="member-avatar">M</div>
+                            <div class="member-info">
+                                <div class="member-name">Muthiatun Nafiah</div>
+                                <div class="member-id">20240410027</div>
+                            </div>
+                        </div>
+                        <div class="about-member-card">
+                            <div class="member-avatar">R</div>
+                            <div class="member-info">
+                                <div class="member-name">Rifa Arifah</div>
+                                <div class="member-id">20240410014</div>
+                            </div>
+                        </div>
+                        <div class="about-member-card">
+                            <div class="member-avatar">Y</div>
+                            <div class="member-info">
+                                <div class="member-name">Yeni Rahayu Widianingsih</div>
+                                <div class="member-id">20240410019</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reference Books -->
+                <div class="about-section">
+                    <h2 class="about-section-title">📚 Reference Books</h2>
+                    <div class="ref-cards">
+                        <div class="ref-card">
+                            <div class="ref-card-icon">📘</div>
+                            <div class="ref-card-body">
+                                <div class="ref-card-title">My Next Words Grade 4</div>
+                                <div class="ref-card-desc">EYLC Team. (2021). <em>My Next Words Grade 4 Student's Book for Elementary School.</em> Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia.</div>
+                                <a href="https://repositori.kemendikdasmen.go.id/25022/1/INGGRIS-BS-KLS%20IV.pdf" target="_blank" class="ref-card-btn">📘 Open Reference Book</a>
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <div class="ref-card-icon">📗</div>
+                            <div class="ref-card-body">
+                                <div class="ref-card-title">Additional Reference</div>
+                                <div class="ref-card-desc">Supporting materials for learning English time expressions at the elementary school level, aligned with the national curriculum.</div>
+                                <a href="#" target="_blank" class="ref-card-btn ref-card-btn-green">📗 Open Reference Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group Photo -->
+                <div class="about-photo-wrap">
+                    <img src="group-photo.jpg" alt="Group Photo" class="about-group-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="about-photo-placeholder">
+                        <span>📸</span>
+                        <p>Group Photo Placeholder</p>
+                        <small>Replace with <strong>group-photo.jpg</strong></small>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="app-footer">
+                <p>© 2026 Tick Tock Time Project</p>
+                <p>Created by <strong>Muhammad Dzaky Putra Pamungkas</strong></p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Confetti canvas -->
+    <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:100%;height:100%;"></canvas>
+
+    <audio id="sound-landing" preload="auto" loop src="assets/sounds/landing.mp3"></audio>
+    <audio id="sound-click" preload="auto" src="assets/sounds/click.mp3"></audio>
+    <audio id="sound-right" preload="auto" src="assets/sounds/right.mp3"></audio>
+    <audio id="sound-wrong" preload="auto" src="assets/sounds/wrong.mp3"></audio>
+    <audio id="sound-winner" preload="auto" src="assets/sounds/winner.mp3"></audio>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
