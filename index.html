@@ -7,6 +7,17 @@
     <title>TickTock Time 🕐</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+    /* ── Canvas Race World Override ── */
+    .rb-race-world { overflow:hidden !important; }
+    #rbRaceCanvas  { display:block; width:100% !important; height:100% !important; }
+    /* Keep the lights overlay on top of canvas */
+    .rb-lights-overlay { z-index:30 !important; }
+    /* Milestone popup on top */
+    .rb-milestone-popup { z-index:31 !important; }
+    .rb-overtake-toast  { z-index:32 !important; }
+    </style>
 </head>
 
 <body>
@@ -257,7 +268,7 @@
 
         <div class="menu-layout">
 
-            <!-- LEFT: mascot -->
+            <!-- LEFT: mascot + Racing Battle teaser -->
             <div class="menu-mascot-col">
                 <div class="cloud-accent cloud-tl" style="opacity:.6"></div>
                 <div class="cloud-accent cloud-bl" style="opacity:.4"></div>
@@ -299,6 +310,64 @@
                         Choose your quiz mode and<br><span class="speech-highlight">let's have fun! 😄</span>
                     </div>
                 </div>
+
+                <!-- Racing Battle teaser panel -->
+                <div class="rb-teaser-panel" onclick="startRacingBattle()">
+                    <div class="rb-teaser-badge"><span>🏁</span> <span class="rb-new-pill">NEW</span></div>
+                    <div class="rb-teaser-title">Racing Battle <span>🏎️</span></div>
+                    <p class="rb-teaser-desc">Challenge your friend in a real-time race! Answer correctly to speed up your car and be the first to reach the finish line!</p>
+                    <!-- Mini race track animation -->
+                    <div class="rb-teaser-track">
+                        <div class="rb-teaser-road">
+                            <div class="rb-road-line rl1"></div>
+                            <div class="rb-road-line rl2"></div>
+                        </div>
+                        <div class="rb-teaser-car rb-car-red-mini" id="teaserCarRed">
+                            <!-- Red mascot car SVG -->
+                            <svg viewBox="0 0 90 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="22" cy="46" rx="11" ry="6" fill="#222"/>
+                                <ellipse cx="68" cy="46" rx="11" ry="6" fill="#222"/>
+                                <ellipse cx="22" cy="45" rx="9" ry="5" fill="#555"/>
+                                <ellipse cx="68" cy="45" rx="9" ry="5" fill="#555"/>
+                                <rect x="6" y="22" width="78" height="24" rx="8" fill="#E74C3C"/>
+                                <rect x="12" y="30" width="66" height="14" rx="6" fill="#C0392B"/>
+                                <rect x="18" y="10" width="54" height="18" rx="6" fill="#E74C3C"/>
+                                <rect x="22" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
+                                <rect x="47" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
+                                <circle cx="45" cy="28" r="6" fill="white" opacity=".18"/>
+                                <rect x="30" y="28" width="30" height="7" rx="3" fill="white" opacity=".25"/>
+                                <!-- P1 badge -->
+                                <rect x="37" y="34" width="16" height="8" rx="4" fill="#E74C3C" stroke="white" stroke-width="1.5"/>
+                                <text x="45" y="40.5" text-anchor="middle" fill="white" font-size="5.5" font-weight="900" font-family="Fredoka One, cursive">P1</text>
+                            </svg>
+                        </div>
+                        <div class="rb-teaser-car rb-car-blue-mini" id="teaserCarBlue">
+                            <svg viewBox="0 0 90 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="22" cy="46" rx="11" ry="6" fill="#222"/>
+                                <ellipse cx="68" cy="46" rx="11" ry="6" fill="#222"/>
+                                <ellipse cx="22" cy="45" rx="9" ry="5" fill="#555"/>
+                                <ellipse cx="68" cy="45" rx="9" ry="5" fill="#555"/>
+                                <rect x="6" y="22" width="78" height="24" rx="8" fill="#2980B9"/>
+                                <rect x="12" y="30" width="66" height="14" rx="6" fill="#1A5276"/>
+                                <rect x="18" y="10" width="54" height="18" rx="6" fill="#2980B9"/>
+                                <rect x="22" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
+                                <rect x="47" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
+                                <circle cx="45" cy="28" r="6" fill="white" opacity=".18"/>
+                                <rect x="30" y="28" width="30" height="7" rx="3" fill="white" opacity=".25"/>
+                                <rect x="37" y="34" width="16" height="8" rx="4" fill="#2980B9" stroke="white" stroke-width="1.5"/>
+                                <text x="45" y="40.5" text-anchor="middle" fill="white" font-size="5.5" font-weight="900" font-family="Fredoka One, cursive">P2</text>
+                            </svg>
+                        </div>
+                        <!-- Finish flag -->
+                        <div class="rb-teaser-finish">🏁</div>
+                    </div>
+                    <div class="rb-teaser-features">
+                        <span class="rb-feat"><span>👥</span> 2 Players</span>
+                        <span class="rb-feat"><span>🏎️</span> Real-time Race</span>
+                        <span class="rb-feat"><span>🏆</span> Be the Winner</span>
+                    </div>
+                    <button class="rb-teaser-start-btn" onclick="startRacingBattle()">Start Race →</button>
+                </div>
             </div>
 
             <!-- RIGHT: mode cards -->
@@ -316,9 +385,10 @@
                     <div class="menu-emoji-item">🏆</div>
                 </div>
                 <div class="menu-panel-deco">
-                    <span class="panel-chip">Study Tips</span>
-                    <span class="panel-chip">Boost score</span>
-                    <span class="panel-chip">Fun facts</span>
+                    <span class="panel-chip">🧠 Study Tips</span>
+                    <span class="panel-chip">🎯 Boost Score</span>
+                    <span class="panel-chip">⚡ Fun Facts</span>
+                    <span class="panel-chip">🏆 Achievements</span>
                 </div>
 
                 <div class="mode-cards">
@@ -597,7 +667,7 @@
                             </div>
                             <div class="dev-details">
                                 <div class="dev-detail"><span>Name:</span> Muhammad Dzaky Putra Pamungkas</div>
-                                <div class="dev-detail"><span>Email:</span> 20240810109@uniku.ac.id</div>
+                                <div class="dev-detail"><span>Student ID:</span> 20240810109@uniku.ac.id</div>
                                 <div class="dev-detail"><span>Study Program:</span> Informatics Engineering</div>
                             </div>
                             <p class="dev-description">ZaxVoldigoad is a dedicated university student who strives to make his parents proud. He is passionate about technology, web development, and continuous learning. Through hard work, perseverance, and determination, he aims
@@ -635,6 +705,185 @@
                 <p>© 2026 Tick Tock Time Project</p>
                 <p>Created by <strong>Muhammad Dzaky Putra Pamungkas</strong></p>
             </footer>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         RACING BATTLE — AUDIO
+    ══════════════════════════════════════════ -->
+    <!-- 🔊 AUDIO README: Replace placeholder files in assets/audio/racing/ with real recordings:
+         engine.mp3   — looping engine hum (loops while racing, pitch shifts with speed)
+         drift.mp3    — looping tire/drift roar while cars move fast
+         horn.mp3     — short car horn beep (plays on overtake event)
+         countdown.mp3 — single beep (plays on each countdown step)
+         boost.mp3    — whoosh/boost sound (plays on turbo activation)
+         Place all files at: assets/audio/racing/<filename>.mp3 -->
+    <audio id="rb-sound-engine" preload="auto" loop src="assets/audio/racing/engine.mp3"></audio>
+    <audio id="rb-sound-drift" preload="auto" loop src="assets/audio/racing/drift.mp3"></audio>
+    <audio id="rb-sound-horn" preload="auto" src="assets/audio/racing/horn.mp3"></audio>
+    <audio id="rb-sound-countdown" preload="auto" src="assets/audio/racing/countdown.mp3"></audio>
+    <audio id="rb-sound-boost" preload="auto" src="assets/audio/racing/boost.mp3"></audio>
+
+    <!-- ══════════════════════════════════════════
+         RACING BATTLE — GAME SCREEN
+    ══════════════════════════════════════════ -->
+    <div id="racing-battle" class="page hidden">
+
+        <!-- Race Track Section (30% height) -->
+        <div class="rb-track-section">
+            <!-- Header bar -->
+            <div class="rb-header">
+                <button class="exit-btn rb-exit-btn" onclick="confirmRacingExit()">✕ Exit</button>
+                <div class="rb-header-center">
+                    <span class="rb-header-title">🏁 Racing Battle</span>
+                    <!-- Milestone bar -->
+                    <div class="rb-milestone-bar" id="rbMilestoneBar">
+                        <div class="rb-milestone-track">
+                            <div class="rb-milestone-marker" style="left:25%">
+                                <div class="rb-ms-flag">25%</div>
+                            </div>
+                            <div class="rb-milestone-marker" style="left:50%">
+                                <div class="rb-ms-flag">HALF</div>
+                            </div>
+                            <div class="rb-milestone-marker" style="left:75%">
+                                <div class="rb-ms-flag">75%</div>
+                            </div>
+                            <div class="rb-milestone-finish">🏁</div>
+                            <!-- P1 dot -->
+                            <div class="rb-ms-dot rb-ms-p1" id="rbMsDotP1" title="P1"></div>
+                            <!-- P2 dot -->
+                            <div class="rb-ms-dot rb-ms-p2" id="rbMsDotP2" title="P2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rb-question-counter">Q <span id="rbQNum">1</span></div>
+            </div>
+
+            <!-- ═══ CANVAS RACE WORLD ═══ -->
+            <div class="rb-race-world" id="rbRaceWorld" style="overflow:hidden;position:relative;">
+                <canvas id="rbRaceCanvas" style="display:block;width:100%;height:100%;"></canvas>
+                <!-- Overtake toast -->
+                <div class="rb-overtake-toast" id="rbOvertakeToast"></div>
+                <!-- Milestone pop-up -->
+                <div class="rb-milestone-popup hidden" id="rbMilestonePopup"></div>
+                <!-- ═══ RACE START LIGHTS OVERLAY ═══ -->
+                <div class="rb-lights-overlay" id="rbLightsOverlay">
+                    <div class="rb-lights-panel">
+                        <div class="rb-lights-title">GET READY! ⏰</div>
+                        <div class="rb-lights-row" id="rbLightsRow">
+                            <div class="rb-light" id="rbL1"></div>
+                            <div class="rb-light" id="rbL2"></div>
+                            <div class="rb-light" id="rbL3"></div>
+                            <div class="rb-light" id="rbL4"></div>
+                            <div class="rb-light" id="rbL5"></div>
+                        </div>
+                        <div class="rb-lights-msg" id="rbLightsMsg"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end rb-race-world -->
+        </div>
+        <!-- end rb-track-section -->
+
+        <!-- Question Cards Section (70% height) -->
+        <div class="rb-cards-section">
+
+            <!-- Player 1 Card -->
+            <div class="rb-player-card rb-p1-card" id="rbP1Card">
+                <div class="rb-player-header rb-p1-header">
+                    <div class="rb-player-badge rb-p1-badge">P1</div>
+                    <span class="rb-player-label">Player 1</span>
+                    <div class="rb-player-stats">
+                        <div class="rb-stat-chip rb-score-chip rb-p1-score-chip">
+                            <span>⭐</span>
+                            <span id="rbScoreP1">0</span>
+                        </div>
+                        <div class="rb-stat-chip rb-combo-chip rb-p1-combo" id="rbComboChipP1" style="display:none">
+                            <span>🔥</span>
+                            <span id="rbComboP1">0</span>x
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress mini bar inside card -->
+                <div class="rb-card-progress">
+                    <div class="rb-card-progress-fill rb-card-p1-fill" id="rbCardFillP1"></div>
+                    <span class="rb-card-progress-label" id="rbCardPctP1">0%</span>
+                </div>
+                <div class="rb-clock-area" id="rbClockAreaP1"></div>
+                <div class="rb-question-text" id="rbQuestionTextP1"></div>
+                <div class="rb-answer-area" id="rbAnswerAreaP1"></div>
+                <div class="rb-feedback-flash rb-p1-flash hidden" id="rbFlashP1"></div>
+            </div>
+
+            <!-- Divider -->
+            <div class="rb-vs-divider">
+                <div class="rb-vs-inner">VS</div>
+            </div>
+
+            <!-- Player 2 Card -->
+            <div class="rb-player-card rb-p2-card" id="rbP2Card">
+                <div class="rb-player-header rb-p2-header">
+                    <div class="rb-player-badge rb-p2-badge">P2</div>
+                    <span class="rb-player-label">Player 2</span>
+                    <div class="rb-player-stats">
+                        <div class="rb-stat-chip rb-score-chip rb-p2-score-chip">
+                            <span>⭐</span>
+                            <span id="rbScoreP2">0</span>
+                        </div>
+                        <div class="rb-stat-chip rb-combo-chip rb-p2-combo" id="rbComboChipP2" style="display:none">
+                            <span>🔥</span>
+                            <span id="rbComboP2">0</span>x
+                        </div>
+                    </div>
+                </div>
+                <div class="rb-card-progress">
+                    <div class="rb-card-progress-fill rb-card-p2-fill" id="rbCardFillP2"></div>
+                    <span class="rb-card-progress-label" id="rbCardPctP2">0%</span>
+                </div>
+                <div class="rb-clock-area" id="rbClockAreaP2"></div>
+                <div class="rb-question-text" id="rbQuestionTextP2"></div>
+                <div class="rb-answer-area" id="rbAnswerAreaP2"></div>
+                <div class="rb-feedback-flash rb-p2-flash hidden" id="rbFlashP2"></div>
+            </div>
+
+        </div>
+        <!-- end rb-cards-section -->
+    </div>
+    <!-- end racing-battle -->
+
+
+    <!-- ══════════════════════════════════════════
+         RACING BATTLE — RESULT SCREEN
+    ══════════════════════════════════════════ -->
+    <div id="racing-result" class="page hidden">
+        <div class="rb-result-scene">
+            <div class="rb-result-container">
+                <!-- Winner celebration -->
+                <div class="rb-result-trophy" id="rbResultTrophy">🏆</div>
+                <div class="rb-winner-title" id="rbWinnerTitle">Player 1 Wins!</div>
+                <div class="rb-winner-car-display" id="rbWinnerCarDisplay"></div>
+
+                <!-- Stats grid -->
+                <div class="rb-result-stats">
+                    <div class="rb-result-player-stats rb-res-p1">
+                        <div class="rb-res-player-label rb-res-p1-label">🏎️ Player 1</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">⭐</span> <span id="rbResFinalScoreP1">0</span> pts</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">✅</span> <span id="rbResCorrectP1">0</span> correct</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">🔥</span> Best combo: <span id="rbResBestComboP1">0</span></div>
+                    </div>
+                    <div class="rb-result-player-stats rb-res-p2">
+                        <div class="rb-res-player-label rb-res-p2-label">🚙 Player 2</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">⭐</span> <span id="rbResFinalScoreP2">0</span> pts</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">✅</span> <span id="rbResCorrectP2">0</span> correct</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">🔥</span> Best combo: <span id="rbResBestComboP2">0</span></div>
+                    </div>
+                </div>
+
+                <div class="rb-result-btns">
+                    <button class="btn btn-learn" onclick="startRacingBattle()">🔄 Race Again</button>
+                    <button class="btn btn-quiz" onclick="showPage('quiz-menu')">🏠 Quiz Menu</button>
+                </div>
+            </div>
         </div>
     </div>
 
