@@ -9,14 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
-    /* ── Canvas Race World Override ── */
-    .rb-race-world { overflow:hidden !important; }
-    #rbRaceCanvas  { display:block; width:100% !important; height:100% !important; }
-    /* Keep the lights overlay on top of canvas */
-    .rb-lights-overlay { z-index:30 !important; }
-    /* Milestone popup on top */
-    .rb-milestone-popup { z-index:31 !important; }
-    .rb-overtake-toast  { z-index:32 !important; }
+        /* ── Canvas Race World Override ── */
+        
+        .rb-race-world {
+            overflow: hidden !important;
+        }
+        
+        #rbRaceCanvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        /* Keep the lights overlay on top of canvas */
+        
+        .rb-lights-overlay {
+            z-index: 30 !important;
+        }
+        /* Milestone popup on top */
+        
+        .rb-milestone-popup {
+            z-index: 31 !important;
+        }
+        
+        .rb-overtake-toast {
+            z-index: 32 !important;
+        }
     </style>
 </head>
 
@@ -258,198 +275,265 @@
     ══════════════════════════════════════════ -->
     <div id="quiz-menu" class="page hidden">
 
-        <!-- Floating decos -->
-        <div class="bg-deco" style="top:8%;left:4%;font-size:clamp(18px,2vw,34px);animation-delay:0s">⭐</div>
-        <div class="bg-deco" style="top:6%;right:5%;font-size:clamp(14px,1.5vw,28px);animation-delay:.5s">🌟</div>
-        <div class="bg-deco" style="bottom:15%;right:4%;font-size:clamp(14px,1.4vw,26px);animation-delay:1s">✨</div>
-        <div class="bg-deco" style="bottom:20%;left:3%;font-size:clamp(14px,1.5vw,26px);animation-delay:.8s">🎈</div>
+        <!-- ── BACKGROUND DECORATIONS ── -->
+        <div class="qmv5-bg">
+            <!-- Floating emoji decos -->
+            <span class="qmv5-float" style="top:8%;left:5%;font-size:32px;animation-delay:0s">⭐</span>
+            <span class="qmv5-float" style="top:12%;right:6%;font-size:24px;animation-delay:.6s">🌟</span>
+            <span class="qmv5-float" style="bottom:12%;left:4%;font-size:28px;animation-delay:1.1s">✨</span>
+            <span class="qmv5-float" style="bottom:8%;right:5%;font-size:22px;animation-delay:.4s">🎉</span>
+            <span class="qmv5-float" style="top:40%;left:1.5%;font-size:20px;animation-delay:.9s">🏆</span>
+            <span class="qmv5-float" style="top:55%;right:1.5%;font-size:20px;animation-delay:1.4s">💫</span>
+            <!-- Decorative blobs -->
+            <div class="qmv5-blob blob-purple"></div>
+            <div class="qmv5-blob blob-orange"></div>
+            <div class="qmv5-blob blob-pink"></div>
+        </div>
 
         <button class="back-btn" onclick="showPage('landing-page')">← Back</button>
 
-        <div class="menu-layout">
+        <!-- ── MAIN WRAPPER ── -->
+        <div class="qmv5-wrap">
 
-            <!-- LEFT: mascot + Racing Battle teaser -->
-            <div class="menu-mascot-col">
-                <div class="cloud-accent cloud-tl" style="opacity:.6"></div>
-                <div class="cloud-accent cloud-bl" style="opacity:.4"></div>
-                <div class="puff puff-tl" style="opacity:.4"></div>
-                <div class="puff puff-tr" style="opacity:.3"></div>
-                <div class="puff puff-bl" style="opacity:.45"></div>
-                <div class="menu-mascot" id="menuMascot">
-                    <div class="menu-mascot-ring"></div>
-                    <div class="mascot-orbit o1">⭐</div>
-                    <div class="mascot-orbit o2">✨</div>
-                    <div class="mascot-orbit o3">💫</div>
-                    <div class="mascot" id="mascot2">
-                        <div class="mascot-clock">
-                            <div class="mascot-face">
-                                <div class="mascot-eye left" style="top:36%"></div>
-                                <div class="mascot-eye right" style="top:36%"></div>
-                                <div class="mascot-cheek left-cheek"></div>
-                                <div class="mascot-cheek right-cheek"></div>
-                                <div class="mascot-smile"></div>
-                                <div class="mascot-hand mh-hour" id="mascotHour2"></div>
-                                <div class="mascot-hand mh-min" id="mascotMin2"></div>
-                                <div class="mascot-center"></div>
-                                <span class="mascot-num" style="top:4%;left:50%;transform:translateX(-50%)">12</span>
-                                <span class="mascot-num" style="top:50%;right:2%;transform:translateY(-50%)">3</span>
-                                <span class="mascot-num" style="bottom:4%;left:50%;transform:translateX(-50%)">6</span>
-                                <span class="mascot-num" style="top:50%;left:2%;transform:translateY(-50%)">9</span>
-                            </div>
-                        </div>
-                        <div class="mascot-legs">
-                            <div class="mascot-leg left"></div>
-                            <div class="mascot-leg right"></div>
-                        </div>
-                        <div class="mascot-arms">
-                            <div class="mascot-arm left"></div>
-                            <div class="mascot-arm right"></div>
-                        </div>
-                    </div>
-                    <div class="menu-mascot-speech">
-                        Choose your quiz mode and<br><span class="speech-highlight">let's have fun! 😄</span>
-                    </div>
-                </div>
-
-                <!-- Racing Battle teaser panel -->
-                <div class="rb-teaser-panel" onclick="startRacingBattle()">
-                    <div class="rb-teaser-badge"><span>🏁</span> <span class="rb-new-pill">NEW</span></div>
-                    <div class="rb-teaser-title">Racing Battle <span>🏎️</span></div>
-                    <p class="rb-teaser-desc">Challenge your friend in a real-time race! Answer correctly to speed up your car and be the first to reach the finish line!</p>
-                    <!-- Mini race track animation -->
-                    <div class="rb-teaser-track">
-                        <div class="rb-teaser-road">
-                            <div class="rb-road-line rl1"></div>
-                            <div class="rb-road-line rl2"></div>
-                        </div>
-                        <div class="rb-teaser-car rb-car-red-mini" id="teaserCarRed">
-                            <!-- Red mascot car SVG -->
-                            <svg viewBox="0 0 90 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <ellipse cx="22" cy="46" rx="11" ry="6" fill="#222"/>
-                                <ellipse cx="68" cy="46" rx="11" ry="6" fill="#222"/>
-                                <ellipse cx="22" cy="45" rx="9" ry="5" fill="#555"/>
-                                <ellipse cx="68" cy="45" rx="9" ry="5" fill="#555"/>
-                                <rect x="6" y="22" width="78" height="24" rx="8" fill="#E74C3C"/>
-                                <rect x="12" y="30" width="66" height="14" rx="6" fill="#C0392B"/>
-                                <rect x="18" y="10" width="54" height="18" rx="6" fill="#E74C3C"/>
-                                <rect x="22" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
-                                <rect x="47" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
-                                <circle cx="45" cy="28" r="6" fill="white" opacity=".18"/>
-                                <rect x="30" y="28" width="30" height="7" rx="3" fill="white" opacity=".25"/>
-                                <!-- P1 badge -->
-                                <rect x="37" y="34" width="16" height="8" rx="4" fill="#E74C3C" stroke="white" stroke-width="1.5"/>
-                                <text x="45" y="40.5" text-anchor="middle" fill="white" font-size="5.5" font-weight="900" font-family="Fredoka One, cursive">P1</text>
-                            </svg>
-                        </div>
-                        <div class="rb-teaser-car rb-car-blue-mini" id="teaserCarBlue">
-                            <svg viewBox="0 0 90 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <ellipse cx="22" cy="46" rx="11" ry="6" fill="#222"/>
-                                <ellipse cx="68" cy="46" rx="11" ry="6" fill="#222"/>
-                                <ellipse cx="22" cy="45" rx="9" ry="5" fill="#555"/>
-                                <ellipse cx="68" cy="45" rx="9" ry="5" fill="#555"/>
-                                <rect x="6" y="22" width="78" height="24" rx="8" fill="#2980B9"/>
-                                <rect x="12" y="30" width="66" height="14" rx="6" fill="#1A5276"/>
-                                <rect x="18" y="10" width="54" height="18" rx="6" fill="#2980B9"/>
-                                <rect x="22" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
-                                <rect x="47" y="12" width="20" height="13" rx="4" fill="#AED6F1" opacity=".9"/>
-                                <circle cx="45" cy="28" r="6" fill="white" opacity=".18"/>
-                                <rect x="30" y="28" width="30" height="7" rx="3" fill="white" opacity=".25"/>
-                                <rect x="37" y="34" width="16" height="8" rx="4" fill="#2980B9" stroke="white" stroke-width="1.5"/>
-                                <text x="45" y="40.5" text-anchor="middle" fill="white" font-size="5.5" font-weight="900" font-family="Fredoka One, cursive">P2</text>
-                            </svg>
-                        </div>
-                        <!-- Finish flag -->
-                        <div class="rb-teaser-finish">🏁</div>
-                    </div>
-                    <div class="rb-teaser-features">
-                        <span class="rb-feat"><span>👥</span> 2 Players</span>
-                        <span class="rb-feat"><span>🏎️</span> Real-time Race</span>
-                        <span class="rb-feat"><span>🏆</span> Be the Winner</span>
-                    </div>
-                    <button class="rb-teaser-start-btn" onclick="startRacingBattle()">Start Race →</button>
-                </div>
+            <!-- TITLE SECTION -->
+            <div class="qmv5-header">
+                <div class="qmv5-title-badge">🎮 Choose Your Mode</div>
+                <h1 class="qmv5-title">
+                    <span class="qmv5-title-icon">⏰</span> Quiz Mode
+                    <span class="qmv5-title-icon">🏁</span>
+                </h1>
+                <p class="qmv5-tagline">Pick a challenge and start your learning adventure!</p>
             </div>
 
-            <!-- RIGHT: mode cards -->
-            <div class="menu-content-col">
-                <div class="menu-title-area">
-                    <span class="menu-star-deco">⭐</span>
-                    <h2 class="menu-title">Quiz Menu</h2>
-                    <span class="menu-star-deco">⭐</span>
-                </div>
-                <p class="menu-sub">Pick a mode and start the challenge!</p>
-                <div class="menu-emoji-row">
-                    <div class="menu-emoji-item">🧠</div>
-                    <div class="menu-emoji-item">🎯</div>
-                    <div class="menu-emoji-item">⚡</div>
-                    <div class="menu-emoji-item">🏆</div>
-                </div>
-                <div class="menu-panel-deco">
-                    <span class="panel-chip">🧠 Study Tips</span>
-                    <span class="panel-chip">🎯 Boost Score</span>
-                    <span class="panel-chip">⚡ Fun Facts</span>
-                    <span class="panel-chip">🏆 Achievements</span>
-                </div>
+            <!-- 3 CARDS GRID -->
+            <div class="qmv5-grid">
 
-                <div class="mode-cards">
+                <!-- ══ CARD 1: Individual Quiz ══ -->
+                <div class="qmv5-card card-indiv" onclick="startIndividualQuiz()">
+                    <!-- top decorative strip -->
+                    <div class="qmv5-card-strip strip-purple"></div>
 
-                    <!-- Multiple Choice -->
-                    <div class="mode-card mode-card-mc" onclick="startIndividualQuiz()">
-                        <div class="mode-card-icon-wrap mc-icon-wrap">
-                            <svg class="mode-svg-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="10" y="10" width="60" height="72" rx="8" fill="#f0f7ff" stroke="#6C5CE7" stroke-width="3"/>
-                                <rect x="20" y="24" width="40" height="6" rx="3" fill="#6C5CE7" opacity=".5"/>
-                                <rect x="20" y="36" width="30" height="6" rx="3" fill="#6C5CE7" opacity=".3"/>
-                                <circle cx="16" cy="54" r="5" fill="#6C5CE7"/>
-                                <circle cx="16" cy="54" r="2.5" fill="white"/>
-                                <rect x="24" y="51" width="32" height="6" rx="3" fill="#6C5CE7" opacity=".3"/>
-                                <circle cx="16" cy="68" r="5" fill="#6C5CE7" opacity=".4"/>
-                                <rect x="24" y="65" width="24" height="6" rx="3" fill="#6C5CE7" opacity=".2"/>
-                                <!-- pencil -->
-                                <rect x="52" y="46" width="20" height="8" rx="4" fill="#FFE66D" transform="rotate(-40 52 46)"/>
-                                <polygon points="43,76 47,68 51,72" fill="#FFE66D" transform="rotate(-40 47 72)"/>
-                            </svg>
-                        </div>
-                        <h3 class="mode-card-title">Individual Quiz</h3>
-                        <p class="mode-card-desc">Answer the questions<br>by choosing the<br>correct option.</p>
-                        <div class="mode-card-deco">
-                            <span class="deco-pill">Learning boost</span>
-                            <span class="deco-pill">Perfect for practice</span>
-                        </div>
-                        <button class="mode-start-btn mc-btn">Start Quiz →</button>
+                    <!-- floating decorations inside card -->
+                    <div class="qmv5-card-deco-tl">📚</div>
+                    <div class="qmv5-card-deco-br">
+                        <!-- Rocket SVG -->
+                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" class="qmv5-deco-svg">
+                            <path d="M36 4C36 4 20 20 20 40C20 50 28 56 36 56C44 56 52 50 52 40C52 20 36 4 36 4Z" fill="#EDE9FE" stroke="#6C5CE7" stroke-width="2"/>
+                            <ellipse cx="36" cy="40" rx="8" ry="10" fill="#6C5CE7" opacity=".25"/>
+                            <path d="M28 52L22 64L30 60L36 68L42 60L50 64L44 52" fill="#A29BFE" opacity=".5"/>
+                            <circle cx="36" cy="34" r="5" fill="#6C5CE7" opacity=".6"/>
+                            <path d="M18 36C14 38 12 44 14 50" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M54 36C58 38 60 44 58 50" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
                     </div>
 
-                    <!-- Time Challenge -->
-                    <div class="mode-card mode-card-tc" onclick="showGroupSetup()">
-                        <div class="mode-card-icon-wrap tc-icon-wrap">
-                            <svg class="mode-svg-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Stopwatch body -->
-                                <circle cx="42" cy="46" r="28" fill="#fff3e0" stroke="#FF9F43" stroke-width="3"/>
-                                <circle cx="42" cy="46" r="20" fill="white" stroke="#FF9F43" stroke-width="2"/>
-                                <!-- hands -->
-                                <line x1="42" y1="46" x2="42" y2="30" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
-                                <line x1="42" y1="46" x2="52" y2="42" stroke="#2D3436" stroke-width="2.5" stroke-linecap="round"/>
-                                <circle cx="42" cy="46" r="3.5" fill="#FF6B6B"/>
-                                <!-- top button -->
-                                <rect x="37" y="10" width="10" height="7" rx="3" fill="#FF9F43"/>
-                                <!-- speed lines -->
-                                <line x1="5" y1="38" x2="14" y2="38" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-                                <line x1="3" y1="46" x2="13" y2="46" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
-                                <line x1="5" y1="54" x2="14" y2="54" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round" opacity=".3"/>
-                            </svg>
-                        </div>
-                        <h3 class="mode-card-title">Team Quiz</h3>
-                        <p class="mode-card-desc">Answer as many questions<br>as you can before<br>time runs out!</p>
-                        <div class="mode-card-deco">
-                            <span class="deco-pill">Beat the clock</span>
-                            <span class="deco-pill">Team energy</span>
-                        </div>
-                        <button class="mode-start-btn tc-btn">Start Quiz →</button>
+                    <!-- Badge -->
+                    <span class="qmv5-badge badge-purple">Solo Mode</span>
+
+                    <!-- Icon -->
+                    <div class="qmv5-icon-wrap wrap-purple">
+                        <svg viewBox="0 0 64 64" fill="none" class="qmv5-icon">
+                            <rect x="8" y="6" width="48" height="56" rx="8" fill="#EDE9FE" stroke="#6C5CE7" stroke-width="2"/>
+                            <rect x="16" y="18" width="32" height="5" rx="2.5" fill="#6C5CE7" opacity=".6"/>
+                            <rect x="16" y="27" width="22" height="4" rx="2" fill="#6C5CE7" opacity=".35"/>
+                            <circle cx="13" cy="40" r="4" fill="#6C5CE7"/>
+                            <circle cx="13" cy="40" r="2" fill="white"/>
+                            <rect x="20" y="37" width="24" height="5" rx="2.5" fill="#6C5CE7" opacity=".3"/>
+                            <circle cx="13" cy="51" r="4" fill="#A29BFE" opacity=".6"/>
+                            <rect x="20" y="48" width="18" height="5" rx="2.5" fill="#6C5CE7" opacity=".2"/>
+                            <!-- Pencil -->
+                            <rect x="44" y="32" width="14" height="6" rx="2" fill="#FFD700" transform="rotate(-40 44 32)"/>
+                            <polygon points="38,52 42,44 46,48" fill="#FFD700" transform="rotate(-40 42 48)"/>
+                        </svg>
                     </div>
 
+                    <h3 class="qmv5-card-title">Individual Quiz</h3>
+                    <p class="qmv5-card-desc">Test your clock skills solo! Choose the correct answer and earn your stars.</p>
+
+                    <!-- Mini stats row -->
+                    <div class="qmv5-mini-stats">
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🧠</span>
+                            <span class="qmv5-ms-lbl">Solo Play</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">⭐</span>
+                            <span class="qmv5-ms-lbl">Score & Learn</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">📈</span>
+                            <span class="qmv5-ms-lbl">Track Progress</span>
+                        </div>
+                    </div>
+
+                    <!-- Difficulty dots -->
+                    <div class="qmv5-diff">
+                        <span class="qmv5-diff-lbl">Difficulty:</span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-off"></span>
+                        <span class="qmv5-diff-tag diff-easy">Easy–Med</span>
+                    </div>
+
+                    <button class="qmv5-btn btn-purple">
+                        <span>Start Quiz</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
                 </div>
+
+                <!-- ══ CARD 2: Team Quiz ══ -->
+                <div class="qmv5-card card-team" onclick="showGroupSetup()">
+                    <div class="qmv5-card-strip strip-orange"></div>
+
+                    <div class="qmv5-card-deco-tl">👥</div>
+                    <div class="qmv5-card-deco-br">
+                        <!-- Clock SVG -->
+                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" class="qmv5-deco-svg">
+                            <circle cx="36" cy="38" r="26" fill="#FFF3E0" stroke="#FF9F43" stroke-width="2"/>
+                            <circle cx="36" cy="38" r="18" fill="white" stroke="#FF9F43" stroke-width="1.5"/>
+                            <line x1="36" y1="38" x2="36" y2="24" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="36" y1="38" x2="47" y2="34" stroke="#2D3436" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="36" cy="38" r="3" fill="#FF6B6B"/>
+                            <rect x="31" y="9" width="10" height="7" rx="3" fill="#FF9F43"/>
+                            <!-- Speed lines -->
+                            <line x1="4" y1="30" x2="13" y2="30" stroke="#FF9F43" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                            <line x1="2" y1="38" x2="12" y2="38" stroke="#FF9F43" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                            <line x1="4" y1="46" x2="13" y2="46" stroke="#FF9F43" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+                        </svg>
+                    </div>
+
+                    <span class="qmv5-badge badge-orange">Team Mode</span>
+
+                    <div class="qmv5-icon-wrap wrap-orange">
+                        <svg viewBox="0 0 64 64" fill="none" class="qmv5-icon">
+                            <!-- Person 1 -->
+                            <circle cx="22" cy="18" r="8" fill="#FFE0B2"/>
+                            <path d="M10 44c0-8 6-12 12-12s12 4 12 12" fill="#FF9F43" opacity=".7"/>
+                            <!-- Person 2 -->
+                            <circle cx="42" cy="18" r="8" fill="#FFE0B2"/>
+                            <path d="M30 44c0-8 6-12 12-12s12 4 12 12" fill="#FFD166" opacity=".7"/>
+                            <!-- Star between them -->
+                            <text x="32" y="36" text-anchor="middle" font-size="14">⚡</text>
+                        </svg>
+                    </div>
+
+                    <h3 class="qmv5-card-title">Team Quiz</h3>
+                    <p class="qmv5-card-desc">Race against the clock as a team! Answer fast before time runs out!</p>
+
+                    <div class="qmv5-mini-stats">
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">👥</span>
+                            <span class="qmv5-ms-lbl">Team Play</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">⏱️</span>
+                            <span class="qmv5-ms-lbl">Beat Clock</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🔥</span>
+                            <span class="qmv5-ms-lbl">Team Energy</span>
+                        </div>
+                    </div>
+
+                    <div class="qmv5-diff">
+                        <span class="qmv5-diff-lbl">Difficulty:</span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-diff-tag diff-hard">Hard</span>
+                    </div>
+
+                    <button class="qmv5-btn btn-orange">
+                        <span>Start Quiz</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+
+                <!-- ══ CARD 3: Racing Battle ══ -->
+                <div class="qmv5-card card-race" onclick="startRacingBattle()">
+                    <div class="qmv5-card-strip strip-race"></div>
+
+                    <div class="qmv5-card-deco-tl">🏁</div>
+                    <!-- Animated mini race scene -->
+                    <div class="qmv5-race-scene">
+                        <div class="qmv5-race-road">
+                            <div class="qmv5-race-dash rd1"></div>
+                            <div class="qmv5-race-dash rd2"></div>
+                            <div class="qmv5-race-dash rd3"></div>
+                        </div>
+                        <div class="qmv5-race-car rc-red">
+                            <svg viewBox="0 0 80 46" fill="none"><ellipse cx="18" cy="40" rx="9" ry="5" fill="#222"/><ellipse cx="62" cy="40" rx="9" ry="5" fill="#222"/><rect x="5" y="20" width="70" height="20" rx="7" fill="#E74C3C"/><rect x="10" y="26" width="60" height="13" rx="5" fill="#C0392B"/><rect x="16" y="9" width="48" height="15" rx="5" fill="#E74C3C"/><rect x="19" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="42" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="33" y="29" width="14" height="7" rx="3" fill="#C0392B" stroke="white" stroke-width="1.2"/><text x="40" y="35" text-anchor="middle" fill="white" font-size="5" font-weight="900" font-family="Fredoka One,cursive">P1</text></svg>
+                        </div>
+                        <div class="qmv5-race-car rc-blue">
+                            <svg viewBox="0 0 80 46" fill="none"><ellipse cx="18" cy="40" rx="9" ry="5" fill="#222"/><ellipse cx="62" cy="40" rx="9" ry="5" fill="#222"/><rect x="5" y="20" width="70" height="20" rx="7" fill="#2980B9"/><rect x="10" y="26" width="60" height="13" rx="5" fill="#1A5276"/><rect x="16" y="9" width="48" height="15" rx="5" fill="#2980B9"/><rect x="19" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="42" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="33" y="29" width="14" height="7" rx="3" fill="#1A5276" stroke="white" stroke-width="1.2"/><text x="40" y="35" text-anchor="middle" fill="white" font-size="5" font-weight="900" font-family="Fredoka One,cursive">P2</text></svg>
+                        </div>
+                        <div class="qmv5-race-flag">🏁</div>
+                    </div>
+
+                    <span class="qmv5-badge badge-race">🆕 NEW</span>
+
+                    <div class="qmv5-icon-wrap wrap-race">
+                        <svg viewBox="0 0 64 64" fill="none" class="qmv5-icon">
+                            <!-- Road -->
+                            <rect x="4" y="28" width="56" height="16" rx="4" fill="#95A5A6" opacity=".3"/>
+                            <rect x="4" y="28" width="56" height="16" rx="4" stroke="#7F8C8D" stroke-width="1.5"/>
+                            <rect x="14" y="35" width="8" height="3" rx="1.5" fill="#FFD700"/>
+                            <rect x="28" y="35" width="8" height="3" rx="1.5" fill="#FFD700"/>
+                            <rect x="42" y="35" width="8" height="3" rx="1.5" fill="#FFD700"/>
+                            <!-- Car top -->
+                            <rect x="6" y="20" width="30" height="14" rx="5" fill="#E74C3C"/>
+                            <rect x="10" y="22" width="12" height="9" rx="2.5" fill="#AED6F1" opacity=".9"/>
+                            <ellipse cx="12" cy="34" rx="6" ry="4" fill="#222"/>
+                            <ellipse cx="30" cy="34" rx="6" ry="4" fill="#222"/>
+                            <!-- Car bottom -->
+                            <rect x="28" y="22" width="30" height="14" rx="5" fill="#2980B9"/>
+                            <rect x="34" y="24" width="12" height="9" rx="2.5" fill="#AED6F1" opacity=".9"/>
+                            <ellipse cx="34" cy="36" rx="6" ry="4" fill="#222"/>
+                            <ellipse cx="52" cy="36" rx="6" ry="4" fill="#222"/>
+                            <!-- Flag -->
+                            <line x1="58" y1="10" x2="58" y2="32" stroke="#555" stroke-width="2"/>
+                            <rect x="58" y="10" width="10" height="10" fill="#1A1A2E"/>
+                            <rect x="60" y="10" width="4" height="4" fill="white"/>
+                            <rect x="64" y="14" width="4" height="4" fill="white"/>
+                        </svg>
+                    </div>
+
+                    <h3 class="qmv5-card-title">Racing Battle</h3>
+                    <p class="qmv5-card-desc">Race your friend in real-time! Answer correctly to speed up your car and cross the finish line first!</p>
+
+                    <div class="qmv5-mini-stats">
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">👥</span>
+                            <span class="qmv5-ms-lbl">2 Players</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🚀</span>
+                            <span class="qmv5-ms-lbl">Real-time</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🏆</span>
+                            <span class="qmv5-ms-lbl">Win & Race</span>
+                        </div>
+                    </div>
+
+                    <div class="qmv5-diff">
+                        <span class="qmv5-diff-lbl">Difficulty:</span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-diff-tag diff-epic">Epic!</span>
+                    </div>
+
+                    <button class="qmv5-btn btn-race">
+                        <span>Start Race</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+
             </div>
+            <!-- /qmv5-grid -->
         </div>
+        <!-- /qmv5-wrap -->
     </div>
 
 
@@ -662,12 +746,12 @@
                                 <div class="dev-icon">👨‍💻</div>
                                 <div>
                                     <h3>About Developer</h3>
-                                    <p class="dev-subtitle">ZaxVoldigoad</p>
+                                    <p class="dev-subtitle">Mahasigma</p>
                                 </div>
                             </div>
                             <div class="dev-details">
-                                <div class="dev-detail"><span>Name:</span> Muhammad Dzaky Putra Pamungkas</div>
-                                <div class="dev-detail"><span>Student ID:</span> 20240810109@uniku.ac.id</div>
+                                <div class="dev-detail"><span>Name:</span> ZaxVoldigoad</div>
+                                <div class="dev-detail"><span>Email:</span> 20240810109@uniku.ac.id</div>
                                 <div class="dev-detail"><span>Study Program:</span> Informatics Engineering</div>
                             </div>
                             <p class="dev-description">ZaxVoldigoad is a dedicated university student who strives to make his parents proud. He is passionate about technology, web development, and continuous learning. Through hard work, perseverance, and determination, he aims
