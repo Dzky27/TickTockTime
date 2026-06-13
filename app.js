@@ -1440,6 +1440,19 @@ const AudioManager = (() => {
 
   function stopAllRace() {
     ['engine','drift','boost','horn','countdown'].forEach(stopLoop);
+    /* Fade out landing BGM when race ends */
+    try {
+      const ls = document.getElementById('sound-landing');
+      if (ls && !ls.paused) {
+        // Fade out gracefully
+        let vol = ls.volume;
+        const fade = setInterval(() => {
+          vol = Math.max(0, vol - 0.01);
+          ls.volume = vol;
+          if (vol <= 0) { ls.pause(); clearInterval(fade); }
+        }, 40);
+      }
+    } catch(e) {}
   }
 
   return { play, startLoop, updateLoop, stopLoop, stopAllRace };
@@ -1735,57 +1748,57 @@ function _drawFrame(ts, dt) {
 /* ── SKY ──────────────────────────────────────────────────── */
 function _dSky(W, H, roadTop, ts) {
   const ctx = _ctx;
+  /* Daytime sky — matches landing page #8EC5E6 */
   const g = ctx.createLinearGradient(0, 0, 0, roadTop);
-  g.addColorStop(0,   '#03071E');
-  g.addColorStop(0.45,'#0A1628');
-  g.addColorStop(0.80,'#0F1F50');
-  g.addColorStop(1,   '#1A2B6B');
+  g.addColorStop(0,    '#4facfe');
+  g.addColorStop(0.35, '#6EC6F5');
+  g.addColorStop(0.75, '#87CEEB');
+  g.addColorStop(1,    '#b8e4f9');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, roadTop + 2);
 
-  /* Stars — pre-computed positions, only opacity changes per frame */
-  const t = ts * 0.001;
-  _wStars.forEach(s => {
-    const sx = ((s.wx - _camX * 0.015) % (W + 20) + W + 20) % (W + 20) - 10;
-    const sy = s.wy * roadTop;
-    const a  = 0.3 + 0.55 * (0.5 + 0.5 * Math.sin(t * s.spd + s.phase));
-    ctx.globalAlpha = a;
-    ctx.fillStyle = '#FFFFFF';
-    ctx.beginPath();
-    ctx.arc(sx, sy, s.r, 0, 6.2832);
-    ctx.fill();
-  });
-  ctx.globalAlpha = 1;
-
-  /* Moon */
-  const moonX = ((W * 0.72 - _camX * 0.008) % (W + 50) + W + 50) % (W + 50);
-  ctx.shadowBlur = 22; ctx.shadowColor = 'rgba(255,240,200,.35)';
-  const mg = ctx.createRadialGradient(moonX, H * 0.09, 0, moonX, H * 0.09, 16);
-  mg.addColorStop(0, '#FFFDE7'); mg.addColorStop(1, '#FFF8C0');
-  ctx.fillStyle = mg;
-  ctx.beginPath(); ctx.arc(moonX, H * 0.09, 15, 0, 6.2832); ctx.fill();
+  /* Sun — bright & cheerful */
+  const sunX = ((W * 0.78 - _camX * 0.005) % (W + 60) + W + 60) % (W + 60);
+  const sunY = roadTop * 0.18;
+  ctx.shadowBlur = 28; ctx.shadowColor = 'rgba(255,230,109,.7)';
+  const sg = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 22);
+  sg.addColorStop(0, '#FFE66D'); sg.addColorStop(0.5, '#FF9F43'); sg.addColorStop(1, 'rgba(255,159,67,0)');
+  ctx.fillStyle = sg;
+  ctx.beginPath(); ctx.arc(sunX, sunY, 22, 0, 6.2832); ctx.fill();
+  /* Sun rays */
   ctx.shadowBlur = 0;
+  ctx.strokeStyle = 'rgba(255,230,109,.45)';
+  ctx.lineWidth = 2;
+  for (let r = 0; r < 8; r++) {
+    const a = (r / 8) * Math.PI * 2 + ts * 0.0004;
+    ctx.beginPath();
+    ctx.moveTo(sunX + Math.cos(a) * 26, sunY + Math.sin(a) * 26);
+    ctx.lineTo(sunX + Math.cos(a) * 38, sunY + Math.sin(a) * 38);
+    ctx.stroke();
+  }
 
-  /* Clouds */
+  /* Fluffy white clouds — parallax */
   _wClouds.forEach(c => {
     const sx = ((c.wx - _camX * RBV3.PARA_CLOUD) % (W + c.w * 2 + 10) + W + c.w * 2 + 10) % (W + c.w * 2 + 10) - c.w;
     const y  = c.wy * roadTop;
-    ctx.globalAlpha = c.a;
-    ctx.fillStyle = '#7E9DCC';
-    ctx.beginPath(); ctx.ellipse(sx,             y + c.w * .14, c.w * .48, c.w * .18, 0, 0, 6.2832); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(sx + c.w * .11, y,             c.w * .30, c.w * .14, 0, 0, 6.2832); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(sx - c.w * .09, y + c.w * .07, c.w * .26, c.w * .11, 0, 0, 6.2832); ctx.fill();
+    ctx.globalAlpha = 0.82;
+    ctx.fillStyle = 'white';
+    ctx.shadowBlur = 8; ctx.shadowColor = 'rgba(100,181,246,.3)';
+    ctx.beginPath(); ctx.ellipse(sx,             y + c.w * .14, c.w * .52, c.w * .20, 0, 0, 6.2832); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(sx + c.w * .14, y,             c.w * .32, c.w * .16, 0, 0, 6.2832); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(sx - c.w * .11, y + c.w * .08, c.w * .28, c.w * .13, 0, 0, 6.2832); ctx.fill();
+    ctx.shadowBlur = 0;
   });
   ctx.globalAlpha = 1;
 }
 
-/* ── MOUNTAINS ────────────────────────────────────────────── */
+/* ── HILLS / MOUNTAINS ─────────────────────────────────────── */
 function _dMtns(W, H, roadTop) {
-  /* Far range */
-  _ctx.fillStyle = '#0E1A3A';
+  /* Far hills — soft blue-green */
+  _ctx.fillStyle = '#7EC8A4';
   _mtnStrip(W, roadTop, _camX * RBV3.PARA_MTN * 0.5, 7, 0.38, 0.54);
-  /* Near range */
-  _ctx.fillStyle = '#1A2B52';
+  /* Near hills — richer green */
+  _ctx.fillStyle = '#5aaa7a';
   _mtnStrip(W, roadTop, _camX * RBV3.PARA_MTN, 5, 0.26, 0.65);
 }
 
@@ -1811,35 +1824,33 @@ function _mtnStrip(W, hy, off, n, hf, vari) {
 /* ── GRASS ────────────────────────────────────────────────── */
 function _dGrass(W, H, roadTop, roadBot) {
   const ctx = _ctx;
-  /* Top strip */
-  ctx.fillStyle = '#1B5E20';
+  /* Bright green grass — matches landing page ground */
+  ctx.fillStyle = '#6aaf4a';
   ctx.fillRect(0, roadTop - 10, W, 12);
-  /* Alternating light/dark stripes — static offset scrolls */
+  ctx.fillRect(0, roadBot,      W, H - roadBot);
+  /* Alternating stripes for depth */
   const goff = _camX % 68;
-  ctx.fillStyle = '#255C21';
+  ctx.fillStyle = '#7ccf5a';
   for (let x = -goff; x < W + 68; x += 68) {
     ctx.fillRect(x, roadTop - 10, 34, 12);
     ctx.fillRect(x, roadBot,      34, H - roadBot);
   }
-  /* Bottom strip */
-  ctx.fillStyle = '#1B5E20';
-  ctx.fillRect(0, roadBot, W, H - roadBot);
 }
 
 /* ── ROAD ─────────────────────────────────────────────────── */
 function _dRoad(W, H, roadTop, roadBot, roadH, ts) {
   const ctx = _ctx;
 
-  /* Asphalt */
+  /* Road — warm light grey, friendly */
   const rg = ctx.createLinearGradient(0, roadTop, 0, roadBot);
-  rg.addColorStop(0,   '#374955');
-  rg.addColorStop(0.5, '#2C3D48');
-  rg.addColorStop(1,   '#212E38');
+  rg.addColorStop(0,   '#B0BEC5');
+  rg.addColorStop(0.5, '#90A4AE');
+  rg.addColorStop(1,   '#78909C');
   ctx.fillStyle = rg;
   ctx.fillRect(0, roadTop, W, roadH);
 
   /* Subtle road texture lines */
-  ctx.strokeStyle = 'rgba(0,0,0,.15)';
+  ctx.strokeStyle = 'rgba(255,255,255,.15)';
   ctx.lineWidth = 1;
   for (let i = 1; i < 4; i++) {
     const y = roadTop + roadH * (i / 4);
@@ -1865,7 +1876,7 @@ function _dRoad(W, H, roadTop, roadBot, roadH, ts) {
   const dLen = 44, dGap = 34, dUnit = dLen + dGap;
   const doff = _camX % dUnit;
   const cy = (roadTop + roadBot) * 0.5;
-  ctx.strokeStyle = '#FFC107';
+  ctx.strokeStyle = '#FFE66D';  /* Landing page accent yellow */
   ctx.lineWidth = 3;
   ctx.setLineDash([dLen, dGap]);
   ctx.lineDashOffset = -doff;
@@ -2246,7 +2257,7 @@ function _dMotionBlur(W, H, roadTop, roadBot) {
   if (maxSpd < 200) return;
   const a = Math.min((maxSpd - 200) / 500, 1) * 0.06;
   _ctx.globalAlpha = a;
-  _ctx.fillStyle = 'rgba(10,14,39,1)';
+  _ctx.fillStyle = 'rgba(142,197,230,.4)';
   _ctx.fillRect(0, roadTop, W, roadBot - roadTop);
   _ctx.globalAlpha = 1;
 }
@@ -2260,7 +2271,7 @@ function _dSpeedLines(W, H, roadTop, roadBot, ts) {
   const roadH = roadBot - roadTop;
   const a = Math.min((maxSpd - 150) / 400, 1) * 0.32;
   ctx.globalAlpha = a;
-  ctx.strokeStyle = 'rgba(180,220,255,.85)';
+  ctx.strokeStyle = 'rgba(255,255,255,.8)';
   ctx.lineWidth = 1.0;
 
   /* Offset lines by camera so they scroll smoothly */
@@ -2435,8 +2446,9 @@ function _showOvertake(newLeader) {
    SECTION 7 — RACE ENTRY & SETUP
 ──────────────────────────────────────────────────────────── */
 function startRacingBattle() {
+  /* Stop landing BGM — will be restarted in rbBeginRace at low volume */
   const ls = document.getElementById('sound-landing');
-  if (ls) { try { ls.pause(); ls.currentTime = 0; } catch(e){} }
+  if (ls) { try { ls.pause(); } catch(e){} }
   AudioManager.stopAllRace();
 
   _canvasActive = false;
@@ -2478,13 +2490,14 @@ function _rbv3BuildLayout() {
   const page = document.getElementById('racing-battle');
   if (!page) return;
   page.innerHTML = `
+  <!-- HEADER -->
   <div class="rb-header">
-    <button class="rb-exit-btn" onclick="confirmRacingExit()">✕ Exit</button>
+    <button class="rb-exit-btn" onclick="confirmRacingExit()">← Exit</button>
     <div class="rb-header-center">
-      <div class="rb-header-title">🏎️ RACING BATTLE ⏰</div>
+      <div class="rb-header-title">🏎️ Racing Battle ⏰</div>
       <div class="rb-dual-progress">
         <div class="rb-dp-row">
-          <div class="rb-dp-label" style="color:#FF6B81">P1</div>
+          <div class="rb-dp-label" style="color:#E74C3C">🏎 P1</div>
           <div class="rb-dp-track" id="rbTrackP1">
             <div class="rb-dp-fill rb-dp-p1" id="rbDpP1"></div>
             <div class="rb-ms-dot rb-ms-p1" id="rbMsDotP1"></div>
@@ -2492,7 +2505,7 @@ function _rbv3BuildLayout() {
           <div class="rb-dp-pct" id="rbDpPctP1">0%</div>
         </div>
         <div class="rb-dp-row">
-          <div class="rb-dp-label" style="color:#54A0FF">P2</div>
+          <div class="rb-dp-label" style="color:#2980B9">🚙 P2</div>
           <div class="rb-dp-track" id="rbTrackP2">
             <div class="rb-dp-fill rb-dp-p2" id="rbDpP2"></div>
             <div class="rb-ms-dot rb-ms-p2" id="rbMsDotP2"></div>
@@ -2501,8 +2514,10 @@ function _rbv3BuildLayout() {
         </div>
       </div>
     </div>
-    <div class="rb-question-counter">Q <span id="rbQNum">1</span></div>
+    <div class="rb-question-counter">❓ Q<span id="rbQNum">1</span></div>
   </div>
+
+  <!-- RACE TRACK -->
   <div class="rb-track-section">
     <div class="rb-race-world" id="rbRaceWorld">
       <canvas id="rbRaceCanvas"></canvas>
@@ -2523,30 +2538,44 @@ function _rbv3BuildLayout() {
       </div>
     </div>
   </div>
+
+  <!-- QUESTION CARDS — full height, no dead space -->
   <div class="rb-cards-section">
+
+    <!-- P1 Card -->
     <div class="rb-player-card rb-p1-card" id="rbP1Card">
+      <!-- Header strip -->
       <div class="rb-player-header">
         <div class="rb-player-badge rb-p1-badge">P1</div>
-        <span class="rb-player-label">Player 1</span>
+        <span class="rb-player-label">🏎️ Player 1</span>
         <div class="rb-player-stats">
           <div class="rb-stat-chip rb-score-chip">⭐ <span id="rbScoreP1">0</span></div>
           <div class="rb-stat-chip rb-combo-chip rb-p1-combo" id="rbComboChipP1" style="display:none">🔥 <span id="rbComboP1">0</span>x</div>
         </div>
       </div>
+      <!-- Progress bar flush -->
       <div class="rb-card-progress">
         <div class="rb-card-progress-fill rb-card-p1-fill" id="rbCardFillP1"></div>
         <span class="rb-card-progress-label" id="rbCardPctP1">0%</span>
       </div>
+      <!-- Clock -->
       <div class="rb-clock-area" id="rbClockAreaP1"></div>
+      <!-- Question -->
       <div class="rb-question-text" id="rbQuestionTextP1"></div>
+      <!-- Answers — fills remaining space -->
       <div class="rb-answer-area" id="rbAnswerAreaP1"></div>
+      <!-- Feedback -->
       <div class="rb-feedback-flash rb-p1-flash hidden" id="rbFlashP1"></div>
     </div>
+
+    <!-- VS Divider -->
     <div class="rb-vs-divider"><div class="rb-vs-inner">VS</div></div>
+
+    <!-- P2 Card -->
     <div class="rb-player-card rb-p2-card" id="rbP2Card">
       <div class="rb-player-header">
         <div class="rb-player-badge rb-p2-badge">P2</div>
-        <span class="rb-player-label">Player 2</span>
+        <span class="rb-player-label">🚙 Player 2</span>
         <div class="rb-player-stats">
           <div class="rb-stat-chip rb-score-chip">⭐ <span id="rbScoreP2">0</span></div>
           <div class="rb-stat-chip rb-combo-chip rb-p2-combo" id="rbComboChipP2" style="display:none">🔥 <span id="rbComboP2">0</span>x</div>
@@ -2561,6 +2590,7 @@ function _rbv3BuildLayout() {
       <div class="rb-answer-area" id="rbAnswerAreaP2"></div>
       <div class="rb-feedback-flash rb-p2-flash hidden" id="rbFlashP2"></div>
     </div>
+
   </div>`;
 }
 
@@ -2641,7 +2671,18 @@ function rbBeginRace() {
   RBS3.active     = true;
   RBS3.raceStarted= true;
   rbLockBoth(false);
-  AudioManager.startLoop('engine', 0.12, 0.85);
+  /* Engine sound */
+  AudioManager.startLoop('engine', 0.15, 0.85);
+  /* Landing page BGM — very low volume so engine stays dominant */
+  try {
+    const ls = document.getElementById('sound-landing');
+    if (ls) {
+      ls.volume = 0.07;   // much quieter than engine (0.15)
+      ls.loop   = true;
+      ls.currentTime = ls.currentTime || 0;
+      ls.play().catch(() => {});
+    }
+  } catch(e) {}
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -3136,7 +3177,7 @@ function confirmRacingExit() {
   showPage('quiz-menu');
   AudioManager.play('click');
   const ls = document.getElementById('sound-landing');
-  if (ls) { try { ls.volume=0.28; ls.loop=true; ls.play().catch(()=>{}); } catch(e){} }
+  if (ls) { try { ls.volume=0.3; ls.currentTime=0; ls.loop=true; ls.play().catch(()=>{}); } catch(e){} }
 }
 
 function _cleanupRace() {
