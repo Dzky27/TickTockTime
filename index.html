@@ -582,6 +582,984 @@
                 <span>⭐</span>
                 <span id="currentScore">0</span>
             </div>
+            <button class="end-quiz-btn" onclick="endQuizEarly()">🏁 End Quiz</button>
+        </div>
+
+        <div class="quiz-body" id="quizBody"></div>
+
+        <div class="quiz-footer">
+            <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>✓ Check Answer</button>
+        </div>
+
+        <!-- Feedback Popup -->
+        <div class="feedback-popup hidden" id="feedbackPopup">
+            <div class="feedback-inner" id="feedbackInner">
+                <div class="feedback-emoji" id="feedbackEmoji"></div>
+                <div class="feedback-msg" id="feedbackMsg"></div>
+                <div class="feedback-score" id="feedbackScore"></div>
+                <button class="feedback-next" id="feedbackNext" onclick="nextQuestion()">Next ➜</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         GROUP QUIZ (Time Challenge mode)
+    ══════════════════════════════════════════ -->
+    <div id="group-quiz" class="page hidden">
+        <div class="quiz-header group-header">
+            <button class="exit-btn" onclick="confirmExit()">✕ Exit</button>
+            <div class="group-turn-info">
+                <div class="current-team-badge" id="currentTeamBadge">Team 1</div>
+                <div class="question-counter">Question <span id="gqNum">1</span>/30</div>
+            </div>
+            <div class="timer-circle" id="timerCircle">
+                <svg viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="26" class="timer-bg"/>
+                    <circle cx="30" cy="30" r="26" class="timer-fg" id="timerArc"/>
+                </svg>
+                <span id="timerNum">30</span>
+            </div>
+            <button class="end-quiz-btn" onclick="endGroupQuizEarly()">🏁 End Quiz</button>
+        </div>
+
+        <div class="group-leaderboard-mini" id="groupLeaderMini"></div>
+        <div class="quiz-body" id="groupQuizBody"></div>
+        <div class="quiz-footer">
+            <button class="check-btn" id="gCheckBtn" onclick="checkGroupAnswer()" disabled>✓ Answer!</button>
+        </div>
+
+        <div class="feedback-popup hidden" id="groupFeedback">
+            <div class="feedback-inner" id="groupFeedbackInner">
+                <div class="feedback-emoji" id="gFeedbackEmoji"></div>
+                <div class="feedback-msg" id="gFeedbackMsg"></div>
+                <div class="feedback-score" id="gFeedbackScore"></div>
+                <button class="feedback-next" onclick="nextGroupQuestion()">Next ➜</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         RESULT PAGE (Individual / Multiple Choice)
+    ══════════════════════════════════════════ -->
+    <div id="result-page" class="page hidden">
+        <div class="result-scene">
+            <div class="result-container" id="resultContainer">
+                <div class="result-trophy" id="resultTrophy">🏆</div>
+                <h2 class="result-title">Quiz Completed!</h2>
+                <div class="result-score-wrap">
+                    <div class="result-score-label">Your Final Score</div>
+                    <div class="result-score-val" id="finalScore">0</div>
+                    <div class="result-score-max">out of 300</div>
+                </div>
+                <div class="result-stats" id="resultStats"></div>
+                <div class="result-badges" id="resultBadges"></div>
+                <div class="result-btns">
+                    <button class="btn btn-learn" onclick="startIndividualQuiz()">🔄 Play Again</button>
+                    <button class="btn btn-quiz" onclick="showPage('landing-page')">🏠 Main Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         GROUP RESULT PAGE
+    ══════════════════════════════════════════ -->
+    <div id="group-result" class="page hidden">
+        <div class="result-scene">
+            <div class="result-container">
+                <div class="group-winner-wrap">
+                    <div class="winner-crown">👑</div>
+                    <div class="winner-trophy-anim">🏆</div>
+                    <h2 class="result-title">Quiz Completed!</h2>
+                    <div class="winner-announce" id="winnerAnnounce"></div>
+                </div>
+                <div class="group-final-leaderboard" id="groupFinalLeaderboard"></div>
+                <div class="result-btns">
+                    <button class="btn btn-learn" onclick="showGroupSetup()">🔄 Play Again</button>
+                    <button class="btn btn-quiz" onclick="showPage('landing-page')">🏠 Main Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         ABOUT PAGE
+    ══════════════════════════════════════════ -->
+    <div id="about-page" class="page hidden">
+        <button class="back-btn about-back-btn" onclick="showPage('landing-page')">← Back</button>
+        <div class="about-page-wrap">
+            <div class="about-container">
+
+                <!-- Header -->
+                <div class="about-header">
+                    <div class="about-logo-wrap">
+                        <img src="university-logo.png" alt="University Logo" class="about-logo" onerror="this.style.display='none';document.getElementById('aboutLogoPlaceholder').style.display='flex'">
+                        <div class="about-logo-placeholder" id="aboutLogoPlaceholder">
+                        </div>
+                    </div>
+                    <div class="about-title-block">
+                        <h1 class="about-title">TickTock Time</h1>
+                        <p class="about-subtitle">We are students of <strong>KUNINGAN UNIVERSITY.</strong></p>
+                    </div>
+                </div>
+
+                <!-- ══ NEW SECTION 1: About Website ══ -->
+                <div class="about-info-section">
+                    <div class="about-info-icon">🌐</div>
+                    <div class="about-info-body">
+                        <h2 class="about-section-title" style="margin-bottom:10px;">📖 About Website</h2>
+                        <p class="about-info-desc">TickTock TIME is an interactive quiz-based learning platform designed to make learning more engaging and enjoyable. The platform provides multiple learning modes, including Individual Quiz, Group Quiz, and Racing Battle, allowing users to improve their knowledge through interactive gameplay.</p>
+                    </div>
+                </div>
+
+                <!-- ══ NEW SECTION 2: Course Lecturer ══ -->
+                <div class="about-info-section about-lecturer-section">
+                    <div class="about-info-icon">👨‍🏫</div>
+                    <div class="about-info-body">
+                        <h2 class="about-section-title" style="margin-bottom:12px;">🎓 Course Lecturer</h2>
+                        <div class="about-lecturer-card">
+                            <div class="lecturer-avatar">E</div>
+                            <div class="lecturer-details">
+                                <div class="lecturer-name">Dr. Erwin Oktoma, M.Pd.</div>
+                                <div class="lecturer-role">Course Lecturer — Kuningan University</div>
+                                <a href="mailto:erwin.oktoma@uniku.ac.id" class="lecturer-email">
+                                    <span>✉️</span> erwin.oktoma@uniku.ac.id
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Members -->
+                <div class="about-section">
+                    <h2 class="about-section-title">👩‍🎓 Team Members</h2>
+                    <div class="about-members">
+                        <div class="about-member-card">
+                            <div class="member-avatar">M</div>
+                            <div class="member-info">
+                                <div class="member-name">Muthiatun Nafiah</div>
+                                <div class="member-id">20240410027@uniku.ac.id</div>
+                            </div>
+                        </div>
+                        <div class="about-member-card">
+                            <div class="member-avatar">R</div>
+                            <div class="member-info">
+                                <div class="member-name">Rifa Arifah</div>
+                                <div class="member-id">20240410014@uniku.ac.id</div>
+                            </div>
+                        </div>
+                        <div class="about-member-card">
+                            <div class="member-avatar">Y</div>
+                            <div class="member-info">
+                                <div class="member-name">Yeni Rahayu Widianingsih</div>
+                                <div class="member-id">20240410019@uniku.ac.id</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-profile-card">
+                        <div class="about-photo-wrap">
+                            <img src="group-photo.jpg" alt="Group Photo" class="about-group-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="about-photo-placeholder">
+                                <span>📸</span>
+                                <p>Group Photo Placeholder</p>
+                                <small>Replace with <strong>group-photo.jpg</strong></small>
+                            </div>
+                        </div>
+                        <div class="about-dev-card">
+                            <div class="about-dev-header">
+                                <div class="dev-icon">👨‍💻</div>
+                                <div>
+                                    <h3>About Developer</h3>
+                                    <p class="dev-subtitle">ZaxVoldigoad</p>
+                                </div>
+                            </div>
+                            <div class="dev-details">
+                                <div class="dev-detail"><span>Name:</span> Muhammad Dzaky Putra Pamungkas</div>
+                                <div class="dev-detail"><span>Email:</span> 20240810109@uniku.ac.id</div>
+                                <div class="dev-detail"><span>Study Program:</span> Informatics Engineering</div>
+                            </div>
+                            <p class="dev-description">ZaxVoldigoad is a dedicated university student who strives to make his parents proud. He is passionate about technology, web development, and continuous learning. Through hard work, perseverance, and determination, he aims
+                                to achieve his goals and build a successful future while honoring the sacrifices and support of his family.</p>
+                            <a href="https://www.instagram.com/liebert.zky_/" class="dev-instagram-btn" target="_blank">Visit Instagram</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reference Books -->
+                <div class="about-section">
+                    <h2 class="about-section-title">📚 Reference & Lesson Guide</h2>
+                    <div class="ref-cards">
+                        <div class="ref-card">
+                            <div class="ref-card-icon">📘</div>
+                            <div class="ref-card-body">
+                                <div class="ref-card-title">My Next Words Grade 4</div>
+                                <div class="ref-card-desc">EYLC Team. (2021). <em>My Next Words Grade 4 Student's Book for Elementary School.</em> Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia.</div>
+                                <a href="https://repositori.kemendikdasmen.go.id/25022/1/INGGRIS-BS-KLS%20IV.pdf" target="_blank" class="ref-card-btn">📘 Open Reference Book</a>
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <div class="ref-card-icon">📗</div>
+                            <div class="ref-card-body">
+                                <div class="ref-card-title">Tick Tock Time Lesson Guide</div>
+                                <div class="ref-card-desc">An interactive English lesson guide for 4th grade students to learn telling time through games, quizzes, and Smart TV activities using TickTockTime.</div>
+                                <a href="https://drive.google.com/file/d/1tV8CGa8uwg5-ESl-xinBEpJpoyV2qoS7/view?usp=sharing" target="_blank" class="ref-card-btn ref-card-btn-green">📗 Open Lesson Guide</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="app-footer">
+                <p>© 2026 Tick Tock Time Project</p>
+                <p>Created by <strong>Muhammad Dzaky Putra Pamungkas</strong></p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         RACING BATTLE — AUDIO
+    ══════════════════════════════════════════ -->
+    <!-- 🔊 AUDIO README: Replace placeholder files in assets/audio/racing/ with real recordings:
+         engine.mp3   — looping engine hum (loops while racing, pitch shifts with speed)
+         drift.mp3    — looping tire/drift roar while cars move fast
+         horn.mp3     — short car horn beep (plays on overtake event)
+         countdown.mp3 — single beep (plays on each countdown step)
+         boost.mp3    — whoosh/boost sound (plays on turbo activation)
+         Place all files at: assets/audio/racing/<filename>.mp3 -->
+    <audio id="rb-sound-engine" preload="auto" loop src="assets/audio/racing/engine.mp3"></audio>
+    <audio id="rb-sound-drift" preload="auto" loop src="assets/audio/racing/drift.mp3"></audio>
+    <audio id="rb-sound-horn" preload="auto" src="assets/audio/racing/horn.mp3"></audio>
+    <audio id="rb-sound-countdown" preload="auto" src="assets/audio/racing/countdown.mp3"></audio>
+    <audio id="rb-sound-boost" preload="auto" src="assets/audio/racing/boost.mp3"></audio>
+
+    <!-- ══════════════════════════════════════════
+         RACING BATTLE — GAME SCREEN
+    ══════════════════════════════════════════ -->
+    <div id="racing-battle" class="page hidden">
+
+        <!-- Race Track Section (30% height) -->
+        <div class="rb-track-section">
+            <!-- Header bar -->
+            <div class="rb-header">
+                <button class="exit-btn rb-exit-btn" onclick="confirmRacingExit()">✕ Exit</button>
+                <div class="rb-header-center">
+                    <span class="rb-header-title">🏁 Racing Battle</span>
+                    <!-- Milestone bar -->
+                    <div class="rb-milestone-bar" id="rbMilestoneBar">
+                        <div class="rb-milestone-track">
+                            <div class="rb-milestone-marker" style="left:25%">
+                                <div class="rb-ms-flag">25%</div>
+                            </div>
+                            <div class="rb-milestone-marker" style="left:50%">
+                                <div class="rb-ms-flag">HALF</div>
+                            </div>
+                            <div class="rb-milestone-marker" style="left:75%">
+                                <div class="rb-ms-flag">75%</div>
+                            </div>
+                            <div class="rb-milestone-finish">🏁</div>
+                            <!-- P1 dot -->
+                            <div class="rb-ms-dot rb-ms-p1" id="rbMsDotP1" title="P1"></div>
+                            <!-- P2 dot -->
+                            <div class="rb-ms-dot rb-ms-p2" id="rbMsDotP2" title="P2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rb-question-counter">Q <span id="rbQNum">1</span></div>
+            </div>
+
+            <!-- ═══ CANVAS RACE WORLD ═══ -->
+            <div class="rb-race-world" id="rbRaceWorld" style="overflow:hidden;position:relative;">
+                <canvas id="rbRaceCanvas" style="display:block;width:100%;height:100%;"></canvas>
+                <!-- Overtake toast -->
+                <div class="rb-overtake-toast" id="rbOvertakeToast"></div>
+                <!-- Milestone pop-up -->
+                <div class="rb-milestone-popup hidden" id="rbMilestonePopup"></div>
+                <!-- ═══ RACE START LIGHTS OVERLAY ═══ -->
+                <div class="rb-lights-overlay" id="rbLightsOverlay">
+                    <div class="rb-lights-panel">
+                        <div class="rb-lights-title">GET READY! ⏰</div>
+                        <div class="rb-lights-row" id="rbLightsRow">
+                            <div class="rb-light" id="rbL1"></div>
+                            <div class="rb-light" id="rbL2"></div>
+                            <div class="rb-light" id="rbL3"></div>
+                            <div class="rb-light" id="rbL4"></div>
+                            <div class="rb-light" id="rbL5"></div>
+                        </div>
+                        <div class="rb-lights-msg" id="rbLightsMsg"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end rb-race-world -->
+        </div>
+        <!-- end rb-track-section -->
+
+        <!-- Question Cards Section (70% height) -->
+        <div class="rb-cards-section">
+
+            <!-- Player 1 Card -->
+            <div class="rb-player-card rb-p1-card" id="rbP1Card">
+                <div class="rb-player-header rb-p1-header">
+                    <div class="rb-player-badge rb-p1-badge">P1</div>
+                    <span class="rb-player-label">Player 1</span>
+                    <div class="rb-player-stats">
+                        <div class="rb-stat-chip rb-score-chip rb-p1-score-chip">
+                            <span>⭐</span>
+                            <span id="rbScoreP1">0</span>
+                        </div>
+                        <div class="rb-stat-chip rb-combo-chip rb-p1-combo" id="rbComboChipP1" style="display:none">
+                            <span>🔥</span>
+                            <span id="rbComboP1">0</span>x
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress mini bar inside card -->
+                <div class="rb-card-progress">
+                    <div class="rb-card-progress-fill rb-card-p1-fill" id="rbCardFillP1"></div>
+                    <span class="rb-card-progress-label" id="rbCardPctP1">0%</span>
+                </div>
+                <div class="rb-clock-area" id="rbClockAreaP1"></div>
+                <div class="rb-question-text" id="rbQuestionTextP1"></div>
+                <div class="rb-answer-area" id="rbAnswerAreaP1"></div>
+                <div class="rb-feedback-flash rb-p1-flash hidden" id="rbFlashP1"></div>
+            </div>
+
+            <!-- Divider -->
+            <div class="rb-vs-divider">
+                <div class="rb-vs-inner">VS</div>
+            </div>
+
+            <!-- Player 2 Card -->
+            <div class="rb-player-card rb-p2-card" id="rbP2Card">
+                <div class="rb-player-header rb-p2-header">
+                    <div class="rb-player-badge rb-p2-badge">P2</div>
+                    <span class="rb-player-label">Player 2</span>
+                    <div class="rb-player-stats">
+                        <div class="rb-stat-chip rb-score-chip rb-p2-score-chip">
+                            <span>⭐</span>
+                            <span id="rbScoreP2">0</span>
+                        </div>
+                        <div class="rb-stat-chip rb-combo-chip rb-p2-combo" id="rbComboChipP2" style="display:none">
+                            <span>🔥</span>
+                            <span id="rbComboP2">0</span>x
+                        </div>
+                    </div>
+                </div>
+                <div class="rb-card-progress">
+                    <div class="rb-card-progress-fill rb-card-p2-fill" id="rbCardFillP2"></div>
+                    <span class="rb-card-progress-label" id="rbCardPctP2">0%</span>
+                </div>
+                <div class="rb-clock-area" id="rbClockAreaP2"></div>
+                <div class="rb-question-text" id="rbQuestionTextP2"></div>
+                <div class="rb-answer-area" id="rbAnswerAreaP2"></div>
+                <div class="rb-feedback-flash rb-p2-flash hidden" id="rbFlashP2"></div>
+            </div>
+
+        </div>
+        <!-- end rb-cards-section -->
+    </div>
+    <!-- end racing-battle -->
+
+
+    <!-- ══════════════════════════════════════════
+         RACING BATTLE — RESULT SCREEN
+    ══════════════════════════════════════════ -->
+    <div id="racing-result" class="page hidden">
+        <div class="rb-result-scene">
+            <div class="rb-result-container">
+                <!-- Winner celebration -->
+                <div class="rb-result-trophy" id="rbResultTrophy">🏆</div>
+                <div class="rb-winner-title" id="rbWinnerTitle">Player 1 Wins!</div>
+                <div class="rb-winner-car-display" id="rbWinnerCarDisplay"></div>
+
+                <!-- Stats grid -->
+                <div class="rb-result-stats">
+                    <div class="rb-result-player-stats rb-res-p1">
+                        <div class="rb-res-player-label rb-res-p1-label">🏎️ Player 1</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">⭐</span> <span id="rbResFinalScoreP1">0</span> pts</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">✅</span> <span id="rbResCorrectP1">0</span> correct</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">🔥</span> Best combo: <span id="rbResBestComboP1">0</span></div>
+                    </div>
+                    <div class="rb-result-player-stats rb-res-p2">
+                        <div class="rb-res-player-label rb-res-p2-label">🚙 Player 2</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">⭐</span> <span id="rbResFinalScoreP2">0</span> pts</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">✅</span> <span id="rbResCorrectP2">0</span> correct</div>
+                        <div class="rb-res-stat"><span class="rb-res-icon">🔥</span> Best combo: <span id="rbResBestComboP2">0</span></div>
+                    </div>
+                </div>
+
+                <div class="rb-result-btns">
+                    <button class="btn btn-learn" onclick="startRacingBattle()">🔄 Race Again</button>
+                    <button class="btn btn-quiz" onclick="showPage('quiz-menu')">🏠 Quiz Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti canvas -->
+    <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:100%;height:100%;"></canvas>
+
+    <audio id="sound-landing" preload="auto" loop src="assets/sounds/landing.mp3"></audio>
+    <audio id="sound-click" preload="auto" src="assets/sounds/click.mp3"></audio>
+    <audio id="sound-right" preload="auto" src="assets/sounds/right.mp3"></audio>
+    <audio id="sound-wrong" preload="auto" src="assets/sounds/wrong.mp3"></audio>
+    <audio id="sound-winner" preload="auto" src="assets/sounds/winner.mp3"></audio>
+
+    <script src="app.js"></script>
+</body>
+
+</html>    </style>
+</head>
+
+<body>
+
+    <!-- ══════════════════════════════════════════
+         LOADING SCREEN
+    ══════════════════════════════════════════ -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-mascot-wrap">
+                <div class="loading-clock-body">
+                    <div class="loading-clock-face">
+                        <div class="loading-hand hour-hand" id="loadHour"></div>
+                        <div class="loading-hand minute-hand" id="loadMinute"></div>
+                        <div class="loading-center-dot"></div>
+                        <span class="loading-num" style="top:6%;left:50%;transform:translateX(-50%)">12</span>
+                        <span class="loading-num" style="top:50%;right:4%;transform:translateY(-50%)">3</span>
+                        <span class="loading-num" style="bottom:6%;left:50%;transform:translateX(-50%)">6</span>
+                        <span class="loading-num" style="top:50%;left:4%;transform:translateY(-50%)">9</span>
+                    </div>
+                    <div class="loading-legs">
+                        <div class="loading-leg"></div>
+                        <div class="loading-leg"></div>
+                    </div>
+                    <div class="loading-arms">
+                        <div class="loading-arm loading-arm-left"></div>
+                        <div class="loading-arm loading-arm-right"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="loading-title">TickTock <span>Time</span></h2>
+            <div class="loading-bar-wrap">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <p class="loading-sub">Loading... ⏰</p>
+        </div>
+        <!-- Floating decos on loading screen -->
+        <div class="load-deco" style="top:10%;left:8%;font-size:32px;animation-delay:0s">⭐</div>
+        <div class="load-deco" style="top:15%;right:10%;font-size:24px;animation-delay:.5s">🌟</div>
+        <div class="load-deco" style="bottom:20%;left:12%;font-size:28px;animation-delay:.9s">✨</div>
+        <div class="load-deco" style="bottom:15%;right:8%;font-size:26px;animation-delay:1.3s">⭐</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         LANDING PAGE
+    ══════════════════════════════════════════ -->
+    <div id="landing-page" class="page hidden">
+
+        <!-- ═══ FLOATING WORLD (outside card, full page) ═══ -->
+        <!-- Stars layer -->
+        <div class="float-world">
+            <div class="fw-star" style="top:5%;left:2%;--sz:38px;--delay:0s;--col:#FFE66D">⭐</div>
+            <div class="fw-star" style="top:8%;left:12%;--sz:22px;--delay:.4s;--col:#FFB3DE">✦</div>
+            <div class="fw-star" style="top:4%;right:6%;--sz:32px;--delay:.7s;--col:#A8E6CF">🌟</div>
+            <div class="fw-star" style="top:12%;right:2%;--sz:18px;--delay:1.1s;--col:#FFE66D">✦</div>
+            <div class="fw-star" style="bottom:8%;left:4%;--sz:28px;--delay:.3s;--col:#74B9FF">⭐</div>
+            <div class="fw-star" style="bottom:5%;left:20%;--sz:20px;--delay:.9s;--col:#FF9F43">✦</div>
+            <div class="fw-star" style="bottom:10%;right:5%;--sz:34px;--delay:.6s;--col:#FD79A8">🌟</div>
+            <div class="fw-star" style="bottom:4%;right:18%;--sz:16px;--delay:1.4s;--col:#A29BFE">✦</div>
+            <div class="fw-star" style="top:50%;left:0.5%;--sz:24px;--delay:1.7s;--col:#55EFC4">⭐</div>
+            <div class="fw-star" style="top:30%;right:1%;--sz:20px;--delay:2.1s;--col:#FFE66D">✦</div>
+            <!-- Emojis -->
+            <div class="fw-emoji" style="top:14%;left:5%;--delay:.2s;font-size:clamp(20px,2.2vw,40px)">🎈</div>
+            <div class="fw-emoji" style="top:6%;left:35%;--delay:.8s;font-size:clamp(16px,1.8vw,32px)">🎉</div>
+            <div class="fw-emoji" style="top:10%;right:12%;--delay:1.3s;font-size:clamp(18px,2vw,36px)">🎊</div>
+            <div class="fw-emoji" style="bottom:15%;left:7%;--delay:.5s;font-size:clamp(18px,2vw,34px)">🌈</div>
+            <div class="fw-emoji" style="bottom:7%;right:10%;--delay:1s;font-size:clamp(18px,2vw,34px)">🎀</div>
+            <div class="fw-emoji" style="top:45%;right:2%;--delay:1.6s;font-size:clamp(16px,1.8vw,30px)">🌸</div>
+            <div class="fw-emoji" style="bottom:22%;left:1%;--delay:2s;font-size:clamp(14px,1.5vw,26px)">🍭</div>
+            <!-- Floating SVG shapes -->
+            <div class="fw-shape shape-circle" style="top:18%;left:8%;--delay:.6s"></div>
+            <div class="fw-shape shape-donut" style="bottom:18%;right:8%;--delay:1.2s"></div>
+            <div class="fw-shape shape-triangle" style="top:40%;left:3%;--delay:.9s"></div>
+            <div class="fw-shape shape-circle2" style="top:8%;right:25%;--delay:1.5s"></div>
+        </div>
+
+        <div class="landing-dashboard">
+
+            <!-- ─── INNER floating decos (inside card) ─── -->
+            <div class="inner-deco id1">✦</div>
+            <div class="inner-deco id2">✦</div>
+            <div class="inner-deco id3">✦</div>
+            <div class="inner-deco id4">⭐</div>
+            <div class="inner-deco id5">🌟</div>
+            <!-- Colorful blobs -->
+            <div class="card-blob blob1"></div>
+            <div class="card-blob blob2"></div>
+            <div class="card-blob blob3"></div>
+
+            <!-- ══ LEFT PANEL ══ -->
+            <div class="dashboard-left">
+                <!-- Cloud puffs -->
+                <div class="puff puff-tl"></div>
+                <div class="puff puff-tr"></div>
+                <div class="puff puff-bl"></div>
+                <!-- Ground strip -->
+                <div class="ground-strip">
+                    <div class="grass-tuft gt1">🌿</div>
+                    <div class="grass-tuft gt2">🌱</div>
+                    <div class="grass-tuft gt3">🌿</div>
+                </div>
+
+                <!-- Mascot -->
+                <div class="mascot" id="mascot">
+                    <div class="mascot-clock">
+                        <div class="mascot-face">
+                            <div class="mascot-eye left"></div>
+                            <div class="mascot-eye right"></div>
+                            <div class="mascot-cheek left-cheek"></div>
+                            <div class="mascot-cheek right-cheek"></div>
+                            <div class="mascot-smile"></div>
+                            <div class="mascot-hand mh-hour" id="mascotHour"></div>
+                            <div class="mascot-hand mh-min" id="mascotMin"></div>
+                            <div class="mascot-center"></div>
+                            <span class="mascot-num" style="top:4%;left:50%;transform:translateX(-50%)">12</span>
+                            <span class="mascot-num" style="top:50%;right:2%;transform:translateY(-50%)">3</span>
+                            <span class="mascot-num" style="bottom:4%;left:50%;transform:translateX(-50%)">6</span>
+                            <span class="mascot-num" style="top:50%;left:2%;transform:translateY(-50%)">9</span>
+                        </div>
+                    </div>
+                    <div class="mascot-legs">
+                        <div class="mascot-leg left"></div>
+                        <div class="mascot-leg right"></div>
+                    </div>
+                    <div class="mascot-arms">
+                        <div class="mascot-arm left"></div>
+                        <div class="mascot-arm right"></div>
+                    </div>
+                    <div class="mascot-speech" id="mascotSpeech">
+                        Learning while playing is fun! 🎉
+                    </div>
+                    <!-- Small star orbits around mascot -->
+                    <div class="mascot-orbit o1">⭐</div>
+                    <div class="mascot-orbit o2">✨</div>
+                    <div class="mascot-orbit o3">💫</div>
+                </div>
+
+                <!-- About Card -->
+                <button class="about-card-btn" onclick="showPage('about-page')">
+                    <span class="about-card-icon">👥</span>
+                    <div class="about-card-text">
+                        <span class="about-card-main">About This Project</span>
+                        <span class="about-card-sub">Meet the development team</span>
+                    </div>
+                    <span class="about-card-arrow">→</span>
+                </button>
+            </div>
+
+            <!-- ══ RIGHT PANEL ══ -->
+            <div class="dashboard-right">
+
+                <!-- Title block — maximized, left-aligned, full width -->
+                <div class="landing-title-area">
+                    <div class="landing-title-row">
+                        <h1 class="landing-title">
+                            <span class="title-line1">TickTock</span>
+                            <span class="title-line2">Time
+                                <!-- Inline SVG clock icon — crisp, big, matches reference -->
+                                <span class="title-clock-svg" aria-hidden="true">
+                                    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="40" cy="40" r="36" fill="white" stroke="#2D3436" stroke-width="5"/>
+                                        <circle cx="40" cy="40" r="32" fill="#fffbe8"/>
+                                        <!-- hour hand pointing to ~1 -->
+                                        <line x1="40" y1="40" x2="52" y2="22" stroke="#2D3436" stroke-width="4" stroke-linecap="round"/>
+                                        <!-- minute hand pointing to 12 -->
+                                        <line x1="40" y1="40" x2="40" y2="14" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
+                                        <circle cx="40" cy="40" r="4" fill="#FF6B6B"/>
+                                    </svg>
+                                </span>
+                            </span>
+                        </h1>
+                        <div class="landing-side-note">
+                            <span class="side-note-icon">🚀</span>
+                            <div class="side-note-copy">
+                                <span class="side-note-label">Challenge Ready</span>
+                                <span class="side-note-text">Easy clock lessons + fun rewards</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="landing-subtitle">
+                        Learn how to read the clock in English<br>with fun interactive quizzes! 🎉
+                    </p>
+                    <div class="landing-emoji-row">
+                        <div class="landing-emoji-item">🎯</div>
+                        <div class="landing-emoji-item">⏰</div>
+                        <div class="landing-emoji-item">🎉</div>
+                        <div class="landing-emoji-item">⭐</div>
+                    </div>
+                </div>
+
+                <!-- High Score pill -->
+                <div class="high-score-wrap" id="highScoreWrap" style="display:none">
+                    <span class="hs-trophy">🏆</span>
+                    <span class="hs-label">High Score:</span>
+                    <span class="hs-val" id="highScoreVal">0</span>
+                    <div class="hs-stars">
+                        <span>⭐</span><span>⭐</span><span>⭐</span>
+                    </div>
+                </div>
+
+                <!-- Badges row -->
+                <div class="badges-row" id="badgesRow"></div>
+
+                <!-- Action Buttons -->
+                <div class="dashboard-actions">
+                    <a href="https://canva.link/zdz2piqxnzt53bj" target="_blank" class="btn btn-learn">
+                        <span class="btn-icon">📚</span>
+                        <div class="btn-text">
+                            <span class="btn-main">Learning Material</span>
+                            <span class="btn-sub">Open classroom presentation</span>
+                        </div>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <button class="btn btn-quiz" onclick="showQuizMenu()">
+                        <span class="btn-icon">🎮</span>
+                        <div class="btn-text">
+                            <span class="btn-main">Start Quiz</span>
+                            <span class="btn-sub">Open quiz menu</span>
+                        </div>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+
+                <!-- Fun fact ticker at bottom of right panel -->
+                <div class="fun-ticker">
+                    <span class="ticker-icon">💡</span>
+                    <span class="ticker-text" id="tickerText">Did you know? There are 1,440 minutes in a day! ⏰</span>
+                </div>
+
+            </div>
+            <!-- end dashboard-right -->
+
+        </div>
+        <!-- end landing-dashboard -->
+    </div>
+    <!-- ══════════════════════════════════════════
+         QUIZ MENU
+    ══════════════════════════════════════════ -->
+    <div id="quiz-menu" class="page hidden">
+
+        <!-- ── BACKGROUND DECORATIONS ── -->
+        <div class="qmv5-bg">
+            <!-- Floating emoji decos -->
+            <span class="qmv5-float" style="top:8%;left:5%;font-size:32px;animation-delay:0s">⭐</span>
+            <span class="qmv5-float" style="top:12%;right:6%;font-size:24px;animation-delay:.6s">🌟</span>
+            <span class="qmv5-float" style="bottom:12%;left:4%;font-size:28px;animation-delay:1.1s">✨</span>
+            <span class="qmv5-float" style="bottom:8%;right:5%;font-size:22px;animation-delay:.4s">🎉</span>
+            <span class="qmv5-float" style="top:40%;left:1.5%;font-size:20px;animation-delay:.9s">🏆</span>
+            <span class="qmv5-float" style="top:55%;right:1.5%;font-size:20px;animation-delay:1.4s">💫</span>
+            <!-- Decorative blobs -->
+            <div class="qmv5-blob blob-purple"></div>
+            <div class="qmv5-blob blob-orange"></div>
+            <div class="qmv5-blob blob-pink"></div>
+        </div>
+
+        <button class="back-btn" onclick="showPage('landing-page')">← Back</button>
+
+        <!-- ── MAIN WRAPPER ── -->
+        <div class="qmv5-wrap">
+
+            <!-- TITLE SECTION -->
+            <div class="qmv5-header">
+                <div class="qmv5-title-badge">🎮 Choose Your Mode</div>
+                <h1 class="qmv5-title">
+                    <span class="qmv5-title-icon">⏰</span> Quiz Mode
+                    <span class="qmv5-title-icon">🏁</span>
+                </h1>
+                <p class="qmv5-tagline">Pick a challenge and start your learning adventure!</p>
+            </div>
+
+            <!-- 3 CARDS GRID -->
+            <div class="qmv5-grid">
+
+                <!-- ══ CARD 1: Individual Quiz ══ -->
+                <div class="qmv5-card card-indiv" onclick="startIndividualQuiz()">
+                    <!-- top decorative strip -->
+                    <div class="qmv5-card-strip strip-purple"></div>
+
+                    <!-- floating decorations inside card -->
+                    <div class="qmv5-card-deco-tl">📚</div>
+                    <div class="qmv5-card-deco-br">
+                        <!-- Rocket SVG -->
+                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" class="qmv5-deco-svg">
+                            <path d="M36 4C36 4 20 20 20 40C20 50 28 56 36 56C44 56 52 50 52 40C52 20 36 4 36 4Z" fill="#EDE9FE" stroke="#6C5CE7" stroke-width="2"/>
+                            <ellipse cx="36" cy="40" rx="8" ry="10" fill="#6C5CE7" opacity=".25"/>
+                            <path d="M28 52L22 64L30 60L36 68L42 60L50 64L44 52" fill="#A29BFE" opacity=".5"/>
+                            <circle cx="36" cy="34" r="5" fill="#6C5CE7" opacity=".6"/>
+                            <path d="M18 36C14 38 12 44 14 50" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M54 36C58 38 60 44 58 50" stroke="#FF9F43" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+
+                    <!-- Badge -->
+                    <span class="qmv5-badge badge-purple">Solo Mode</span>
+
+                    <!-- Icon -->
+                    <div class="qmv5-icon-wrap wrap-purple">
+                        <svg viewBox="0 0 64 64" fill="none" class="qmv5-icon">
+                            <rect x="8" y="6" width="48" height="56" rx="8" fill="#EDE9FE" stroke="#6C5CE7" stroke-width="2"/>
+                            <rect x="16" y="18" width="32" height="5" rx="2.5" fill="#6C5CE7" opacity=".6"/>
+                            <rect x="16" y="27" width="22" height="4" rx="2" fill="#6C5CE7" opacity=".35"/>
+                            <circle cx="13" cy="40" r="4" fill="#6C5CE7"/>
+                            <circle cx="13" cy="40" r="2" fill="white"/>
+                            <rect x="20" y="37" width="24" height="5" rx="2.5" fill="#6C5CE7" opacity=".3"/>
+                            <circle cx="13" cy="51" r="4" fill="#A29BFE" opacity=".6"/>
+                            <rect x="20" y="48" width="18" height="5" rx="2.5" fill="#6C5CE7" opacity=".2"/>
+                            <!-- Pencil -->
+                            <rect x="44" y="32" width="14" height="6" rx="2" fill="#FFD700" transform="rotate(-40 44 32)"/>
+                            <polygon points="38,52 42,44 46,48" fill="#FFD700" transform="rotate(-40 42 48)"/>
+                        </svg>
+                    </div>
+
+                    <h3 class="qmv5-card-title">Individual Quiz</h3>
+                    <p class="qmv5-card-desc">Test your clock skills solo! Choose the correct answer and earn your stars.</p>
+
+                    <!-- Mini stats row -->
+                    <div class="qmv5-mini-stats">
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🧠</span>
+                            <span class="qmv5-ms-lbl">Solo Play</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">⭐</span>
+                            <span class="qmv5-ms-lbl">Score & Learn</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">📈</span>
+                            <span class="qmv5-ms-lbl">Track Progress</span>
+                        </div>
+                    </div>
+
+                    <!-- Difficulty dots -->
+                    <div class="qmv5-diff">
+                        <span class="qmv5-diff-lbl">Difficulty:</span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-off"></span>
+                        <span class="qmv5-diff-tag diff-easy">Easy–Med</span>
+                    </div>
+
+                    <button class="qmv5-btn btn-purple">
+                        <span>Start Quiz</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+
+                <!-- ══ CARD 2: Team Quiz ══ -->
+                <div class="qmv5-card card-team" onclick="showGroupSetup()">
+                    <div class="qmv5-card-strip strip-orange"></div>
+
+                    <div class="qmv5-card-deco-tl">👥</div>
+                    <div class="qmv5-card-deco-br">
+                        <!-- Clock SVG -->
+                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" class="qmv5-deco-svg">
+                            <circle cx="36" cy="38" r="26" fill="#FFF3E0" stroke="#FF9F43" stroke-width="2"/>
+                            <circle cx="36" cy="38" r="18" fill="white" stroke="#FF9F43" stroke-width="1.5"/>
+                            <line x1="36" y1="38" x2="36" y2="24" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="36" y1="38" x2="47" y2="34" stroke="#2D3436" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="36" cy="38" r="3" fill="#FF6B6B"/>
+                            <rect x="31" y="9" width="10" height="7" rx="3" fill="#FF9F43"/>
+                            <!-- Speed lines -->
+                            <line x1="4" y1="30" x2="13" y2="30" stroke="#FF9F43" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                            <line x1="2" y1="38" x2="12" y2="38" stroke="#FF9F43" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                            <line x1="4" y1="46" x2="13" y2="46" stroke="#FF9F43" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+                        </svg>
+                    </div>
+
+                    <span class="qmv5-badge badge-orange">Team Mode</span>
+
+                    <div class="qmv5-icon-wrap wrap-orange">
+                        <svg viewBox="0 0 64 64" fill="none" class="qmv5-icon">
+                            <!-- Person 1 -->
+                            <circle cx="22" cy="18" r="8" fill="#FFE0B2"/>
+                            <path d="M10 44c0-8 6-12 12-12s12 4 12 12" fill="#FF9F43" opacity=".7"/>
+                            <!-- Person 2 -->
+                            <circle cx="42" cy="18" r="8" fill="#FFE0B2"/>
+                            <path d="M30 44c0-8 6-12 12-12s12 4 12 12" fill="#FFD166" opacity=".7"/>
+                            <!-- Star between them -->
+                            <text x="32" y="36" text-anchor="middle" font-size="14">⚡</text>
+                        </svg>
+                    </div>
+
+                    <h3 class="qmv5-card-title">Team Quiz</h3>
+                    <p class="qmv5-card-desc">Race against the clock as a team! Answer fast before time runs out!</p>
+
+                    <div class="qmv5-mini-stats">
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">👥</span>
+                            <span class="qmv5-ms-lbl">Team Play</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">⏱️</span>
+                            <span class="qmv5-ms-lbl">Beat Clock</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🔥</span>
+                            <span class="qmv5-ms-lbl">Team Energy</span>
+                        </div>
+                    </div>
+
+                    <div class="qmv5-diff">
+                        <span class="qmv5-diff-lbl">Difficulty:</span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-diff-tag diff-hard">Hard</span>
+                    </div>
+
+                    <button class="qmv5-btn btn-orange">
+                        <span>Start Quiz</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+
+                <!-- ══ CARD 3: Racing Battle ══ -->
+                <div class="qmv5-card card-race" onclick="startRacingBattle()">
+                    <div class="qmv5-card-strip strip-race"></div>
+
+                    <div class="qmv5-card-deco-tl">🏁</div>
+                    <!-- Animated mini race scene -->
+                    <div class="qmv5-race-scene">
+                        <div class="qmv5-race-road">
+                            <div class="qmv5-race-dash rd1"></div>
+                            <div class="qmv5-race-dash rd2"></div>
+                            <div class="qmv5-race-dash rd3"></div>
+                        </div>
+                        <div class="qmv5-race-car rc-red">
+                            <svg viewBox="0 0 80 46" fill="none"><ellipse cx="18" cy="40" rx="9" ry="5" fill="#222"/><ellipse cx="62" cy="40" rx="9" ry="5" fill="#222"/><rect x="5" y="20" width="70" height="20" rx="7" fill="#E74C3C"/><rect x="10" y="26" width="60" height="13" rx="5" fill="#C0392B"/><rect x="16" y="9" width="48" height="15" rx="5" fill="#E74C3C"/><rect x="19" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="42" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="33" y="29" width="14" height="7" rx="3" fill="#C0392B" stroke="white" stroke-width="1.2"/><text x="40" y="35" text-anchor="middle" fill="white" font-size="5" font-weight="900" font-family="Fredoka One,cursive">P1</text></svg>
+                        </div>
+                        <div class="qmv5-race-car rc-blue">
+                            <svg viewBox="0 0 80 46" fill="none"><ellipse cx="18" cy="40" rx="9" ry="5" fill="#222"/><ellipse cx="62" cy="40" rx="9" ry="5" fill="#222"/><rect x="5" y="20" width="70" height="20" rx="7" fill="#2980B9"/><rect x="10" y="26" width="60" height="13" rx="5" fill="#1A5276"/><rect x="16" y="9" width="48" height="15" rx="5" fill="#2980B9"/><rect x="19" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="42" y="11" width="18" height="10" rx="3" fill="#AED6F1" opacity=".9"/><rect x="33" y="29" width="14" height="7" rx="3" fill="#1A5276" stroke="white" stroke-width="1.2"/><text x="40" y="35" text-anchor="middle" fill="white" font-size="5" font-weight="900" font-family="Fredoka One,cursive">P2</text></svg>
+                        </div>
+                        <div class="qmv5-race-flag">🏁</div>
+                    </div>
+
+                    <span class="qmv5-badge badge-race">🆕 NEW</span>
+
+                    <div class="qmv5-icon-wrap wrap-race">
+                        <svg viewBox="0 0 64 64" fill="none" class="qmv5-icon">
+                            <!-- Road -->
+                            <rect x="4" y="28" width="56" height="16" rx="4" fill="#95A5A6" opacity=".3"/>
+                            <rect x="4" y="28" width="56" height="16" rx="4" stroke="#7F8C8D" stroke-width="1.5"/>
+                            <rect x="14" y="35" width="8" height="3" rx="1.5" fill="#FFD700"/>
+                            <rect x="28" y="35" width="8" height="3" rx="1.5" fill="#FFD700"/>
+                            <rect x="42" y="35" width="8" height="3" rx="1.5" fill="#FFD700"/>
+                            <!-- Car top -->
+                            <rect x="6" y="20" width="30" height="14" rx="5" fill="#E74C3C"/>
+                            <rect x="10" y="22" width="12" height="9" rx="2.5" fill="#AED6F1" opacity=".9"/>
+                            <ellipse cx="12" cy="34" rx="6" ry="4" fill="#222"/>
+                            <ellipse cx="30" cy="34" rx="6" ry="4" fill="#222"/>
+                            <!-- Car bottom -->
+                            <rect x="28" y="22" width="30" height="14" rx="5" fill="#2980B9"/>
+                            <rect x="34" y="24" width="12" height="9" rx="2.5" fill="#AED6F1" opacity=".9"/>
+                            <ellipse cx="34" cy="36" rx="6" ry="4" fill="#222"/>
+                            <ellipse cx="52" cy="36" rx="6" ry="4" fill="#222"/>
+                            <!-- Flag -->
+                            <line x1="58" y1="10" x2="58" y2="32" stroke="#555" stroke-width="2"/>
+                            <rect x="58" y="10" width="10" height="10" fill="#1A1A2E"/>
+                            <rect x="60" y="10" width="4" height="4" fill="white"/>
+                            <rect x="64" y="14" width="4" height="4" fill="white"/>
+                        </svg>
+                    </div>
+
+                    <h3 class="qmv5-card-title">Racing Battle</h3>
+                    <p class="qmv5-card-desc">Race your friend in real-time! Answer correctly to speed up your car and cross the finish line first!</p>
+
+                    <div class="qmv5-mini-stats">
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">👥</span>
+                            <span class="qmv5-ms-lbl">2 Players</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🚀</span>
+                            <span class="qmv5-ms-lbl">Real-time</span>
+                        </div>
+                        <div class="qmv5-mini-stat">
+                            <span class="qmv5-ms-icon">🏆</span>
+                            <span class="qmv5-ms-lbl">Win & Race</span>
+                        </div>
+                    </div>
+
+                    <div class="qmv5-diff">
+                        <span class="qmv5-diff-lbl">Difficulty:</span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-dot dot-on"></span>
+                        <span class="qmv5-diff-tag diff-epic">Epic!</span>
+                    </div>
+
+                    <button class="qmv5-btn btn-race">
+                        <span>Start Race</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+
+            </div>
+            <!-- /qmv5-grid -->
+        </div>
+        <!-- /qmv5-wrap -->
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         GROUP SETUP (Time Challenge)
+    ══════════════════════════════════════════ -->
+    <div id="group-setup" class="page hidden">
+        <button class="back-btn" onclick="showPage('quiz-menu')">← Back</button>
+        <div class="setup-page-wrap">
+            <div class="setup-container">
+                <div class="setup-header">
+                    <span class="setup-emoji">👥</span>
+                    <h2 class="menu-title">Set Up Groups</h2>
+                    <p class="menu-sub">Define the number and names of your groups!</p>
+                </div>
+                <div class="group-count-wrap">
+                    <label class="count-label">Number of Groups:</label>
+                    <div class="count-selector">
+                        <button onclick="changeGroupCount(-1)">−</button>
+                        <span id="groupCountDisplay">3</span>
+                        <button onclick="changeGroupCount(1)">+</button>
+                    </div>
+                </div>
+                <div id="groupInputs" class="group-inputs"></div>
+                <button class="start-group-btn" onclick="startGroupQuiz()">🚀 Start Group Quiz!</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         INDIVIDUAL QUIZ (Multiple Choice mode)
+    ══════════════════════════════════════════ -->
+    <div id="individual-quiz" class="page hidden">
+        <div class="quiz-header">
+            <button class="exit-btn" onclick="confirmExit()">✕ Exit</button>
+            <div class="quiz-progress-wrap">
+                <div class="progress-info">
+                    <span class="q-num-badge"><span id="qNum">1</span><span class="q-sep">/</span><span id="qTotal">30</span></span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar"></div>
+                </div>
+            </div>
+            <div class="score-display">
+                <span>⭐</span>
+                <span id="currentScore">0</span>
+            </div>
         </div>
 
         <div class="quiz-body" id="quizBody"></div>
