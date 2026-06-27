@@ -1,8 +1,4 @@
-/* ============================================
-   TICKTOCK TIME — APP.JS (Refactored)
-   Tug of War completely removed.
-   Multiple Choice & Time Challenge (Group) kept.
-   ============================================ */
+
 
 'use strict';
 
